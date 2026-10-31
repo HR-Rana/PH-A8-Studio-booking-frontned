@@ -56,7 +56,7 @@ export default function FeaturedStudios() {
           subtitle="Handpicked studios, loved by creators"
         />
         <Link
-          href="#"
+          href="/explore"
           className="mx-auto mt-4 flex w-fit items-center gap-2 rounded-full border border-purple-400/50 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-purple-500/15 lg:absolute lg:right-0 lg:top-1 lg:mx-0 lg:mt-0"
         >
           View All Studios

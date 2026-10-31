@@ -71,7 +71,7 @@ export default function CommunityCTA() {
           </div>
 
           <Link
-            href="#"
+            href="/register"
             className="inline-flex w-fit shrink-0 items-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-purple-700 transition-colors hover:bg-purple-50"
           >
             Get Started

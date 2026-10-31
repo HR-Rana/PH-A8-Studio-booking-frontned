@@ -6,8 +6,8 @@ import NewsletterForm from "./NewsletterForm";
 
 const quickLinks = [
   { label: "Home", href: "/" },
-  { label: "Explore Studios", href: "#" },
-  { label: "How It Works", href: "#" },
+  { label: "Explore Studios", href: "/explore" },
+  { label: "How It Works", href: "/how-it-works" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "#" },
 ];

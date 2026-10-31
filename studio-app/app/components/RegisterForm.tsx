@@ -5,6 +5,8 @@ import {
   IconArrow,
   IconGitHub,
   IconGoogle,
+  IconMail,
+  IconUser,
   IconUserPlus,
   IconXLogo,
 } from "./AuthIcons";

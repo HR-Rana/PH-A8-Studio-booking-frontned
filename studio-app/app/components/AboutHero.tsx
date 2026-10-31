@@ -54,7 +54,7 @@ export default function AboutHero() {
           </p>
 
           <Link
-            href="#"
+            href="/explore"
             className="mt-8 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-purple-600 to-purple-500 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(147,51,234,0.4)] transition-transform hover:scale-[1.03]"
           >
             Explore Studios
