@@ -11,6 +11,7 @@ import {
   IconUser,
   IconXLogo,
 } from "./AuthIcons";
+import { authClient } from "../lib/auth-client";
 
 const socialButtons = [
   {
@@ -33,7 +34,7 @@ const socialButtons = [
 export default function LoginForm() {
   const [remember, setRemember] = useState(true);
 
-  const hadleRegistrationForm =(e:React.SubmitEvent<HTMLElement>)=>{
+  const handleLoginForm = async (e: React.SubmitEvent<HTMLElement>) => {
     e.preventDefault();
 
 
@@ -41,7 +42,19 @@ export default function LoginForm() {
     const userData = Object.fromEntries(formData.entries())
 
 
-    console.log(userData)
+    const { data, error } = await authClient.signIn.email({
+      email: userData.email,
+      password: userData.password,
+    })
+
+
+    if (data) {
+      console.log(data)
+    }
+    console.log(error)
+
+
+     console.log(userData)
 
   }
 
@@ -58,7 +71,7 @@ export default function LoginForm() {
 
       <form
         className="mt-6 space-y-4"
-        onSubmit={hadleRegistrationForm}
+        onSubmit={handleLoginForm}
       >
         <Field
           type="email"

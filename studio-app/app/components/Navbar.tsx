@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import NavUserInfo from "./NavUserInfo"
 type NavLink = {
   label: string;
   href: string;
@@ -112,7 +112,7 @@ export default function Navbar({ active = "Home" }: { active?: string }) {
             );
           })}
         </ul>
-
+          <NavUserInfo />
         <div className="flex items-center gap-4">
           {/* <button
             type="button"
