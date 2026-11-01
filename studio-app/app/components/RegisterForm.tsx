@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Field, PasswordField } from "./AuthFields";
 import {
   IconArrow,
@@ -27,6 +28,7 @@ const socialButtons = [
 ];
 
 export default function RegisterForm() {
+  const [password, setMatchPass] = useState(false)
   
   const handleRegistrationForm = (e:React.SubmitEvent<HTMLFormElement>) =>{
     e.preventDefault()
@@ -36,6 +38,19 @@ export default function RegisterForm() {
 
     const password = userData.password;
     const confirmPass = userData.confirmPassword;
+
+
+    if(password !== confirmPass){
+      setMatchPass(true)
+      alert("password filed is not matched..!")
+      return
+    }
+
+
+    // const { data, error } = await authClient.signUp.email({
+    // ...userData
+    // });
+
 
     console.log(userData)
 
@@ -61,13 +76,14 @@ export default function RegisterForm() {
         />
         <Field
           type="email"
+         
           name="email"
           placeholder="Email Address"
           icon={<IconMail className="h-5 w-5 text-gray-400" />}
         />
         <PasswordField name="password" placeholder="Password" />
         <PasswordField name="confirmPassword" placeholder="Confirm Password" />
-
+        
         <button
           type="submit"
           className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-600 to-purple-500 py-3.5 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(147,51,234,0.45)] transition-transform hover:scale-[1.02]"
@@ -75,6 +91,9 @@ export default function RegisterForm() {
           Create Account
           <IconArrow className="h-4 w-4" />
         </button>
+        {
+          password ? <p>{"Please type same password "}</p>: " "
+        }
       </form>
 
       <div className="mt-6 space-y-5">

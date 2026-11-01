@@ -20,8 +20,8 @@ export default function LoginPage() {
   const handleRegistrationForm =(e:React.SubmitEvent<HTMLElement>)=>{
     e.preventDefault()
 
-    const formData = new FormData(e.terget)
-    const user = Object.fromEntries(formData.entries)
+    const formData = new FormData(e.currentTarget as HTMLFormElement)
+    const user = Object.fromEntries(formData.entries())
 
     console.log(user)
 

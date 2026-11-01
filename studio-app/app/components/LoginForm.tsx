@@ -38,7 +38,7 @@ export default function LoginForm() {
 
 
     const formData = new FormData(e.target);
-    const userData = Object.fromEntries(formData.entries)
+    const userData = Object.fromEntries(formData.entries())
 
 
     console.log(userData)

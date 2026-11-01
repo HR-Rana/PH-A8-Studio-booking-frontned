@@ -74,7 +74,7 @@ export default function Hero() {
     <section className="relative isolate overflow-hidden bg-[#0b0a10]">
       {slides.map((slide, index) => (
         <div
-          key={slide.image}
+            key={slide.image.src}
           aria-hidden={index !== active}
           className={`absolute inset-0 transition-opacity duration-700 ${
             index === active ? "opacity-100" : "opacity-0"
@@ -152,7 +152,7 @@ export default function Hero() {
         <div className="absolute inset-x-0 bottom-8 flex justify-center gap-2">
           {slides.map((slide, index) => (
             <button
-              key={slide.image}
+          key={slide.image.src}
               type="button"
               aria-label={`Go to slide ${index + 1}`}
               onClick={() => setActive(index)}
