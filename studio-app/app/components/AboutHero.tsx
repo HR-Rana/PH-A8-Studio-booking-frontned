@@ -24,7 +24,7 @@ export default function AboutHero() {
     <section className="relative overflow-hidden bg-[#15111d]">
       <div className="absolute inset-y-0 right-0 hidden w-[55%] md:block">
         <Image
-          src="/images/hero-studio.jpg"
+          src="/images/purple-photo-studio.jpg"
           alt="Neon-lit creative studio with softbox lighting"
           fill
           priority
@@ -64,7 +64,7 @@ export default function AboutHero() {
 
         <div className="relative mt-10 h-56 w-full overflow-hidden rounded-2xl md:hidden">
           <Image
-            src="/images/hero-studio.jpg"
+            src="/images/purple-photo-studio.jpg"
             alt="Neon-lit creative studio with softbox lighting"
             fill
             sizes="100vw"

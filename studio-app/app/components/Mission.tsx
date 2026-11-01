@@ -75,7 +75,7 @@ export default function Mission() {
       <div className="mx-auto grid max-w-[1440px] items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <div className="relative h-72 overflow-hidden rounded-3xl shadow-sm sm:h-96 lg:h-[420px]">
           <Image
-            src="/images/luke-greenwood-uZW1GyRLm44-unsplash.jpg"
+            src="/images/music-mixing-console.jpg"
             alt="StudioSpace creative studio lounge"
             fill
             sizes="(min-width: 1024px) 50vw, 100vw"

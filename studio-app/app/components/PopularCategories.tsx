@@ -13,32 +13,32 @@ import {
 const categories: { name: string; image: string; icon: ReactNode }[] = [
   {
     name: "Photography Studio",
-    image: "/images/hc-digital-7L2h4zTYiNI-unsplash.jpg",
+    image: "/images/white-cyc-studio.jpg",
     icon: <IconCamera className="h-5 w-5" />,
   },
   {
     name: "Film & Video Production",
-    image: "/images/register-studio.jpg",
+    image: "/images/film-set-director.jpg",
     icon: <IconClapper className="h-5 w-5" />,
   },
   {
     name: "Podcast Studio",
-    image: "/images/candidsoul-podcast-8281777.jpg",
+    image: "/images/podcast-microphones.jpg",
     icon: <IconMic className="h-5 w-5" />,
   },
   {
     name: "Music Recording",
-    image: "/images/luke-greenwood-uZW1GyRLm44-unsplash.jpg",
+    image: "/images/music-mixing-console.jpg",
     icon: <IconMusic className="h-5 w-5" />,
   },
   {
     name: "Art Workshop",
-    image: "/images/pexels-luchik-14920148.jpg",
+    image: "/images/pink-content-studio.jpg",
     icon: <IconPalette className="h-5 w-5" />,
   },
   {
     name: "Cyclorama Studio",
-    image: "/images/neon-wang-OWPB5I0xgFg-unsplash.jpg",
+    image: "/images/sound-stage-loft.jpg",
     icon: <IconSphere className="h-5 w-5" />,
   },
 ];

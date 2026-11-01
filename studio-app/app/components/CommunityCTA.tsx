@@ -45,7 +45,7 @@ export default function CommunityCTA() {
       <div className="relative mx-auto max-w-[1440px] overflow-hidden rounded-2xl bg-gradient-to-r from-[#3b0d69] via-[#6a1fb0] to-[#8b2fe8]">
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/2 md:block">
           <Image
-            src="/images/hero.jpg"
+            src="/images/photo-shoot-session.jpg"
             alt=""
             fill
             sizes="50vw"

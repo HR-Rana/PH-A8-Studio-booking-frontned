@@ -15,6 +15,19 @@ const benefits = [
 ];
 
 export default function LoginPage() {
+
+  const handleRegistrationForm =(e:React.SubmitEvent<HTMLElement>)=>{
+    e.preventDefault()
+
+    const formData = new FormData(e.terget)
+    const user = Object.fromEntries(formData.entries)
+
+    console.log(user)
+
+  }
+
+
+
   return (
     <AuthShell
       title={
@@ -27,7 +40,7 @@ export default function LoginPage() {
       topNote="Don't have an account?"
       topLinkLabel="Register"
       topLinkHref="/register"
-      image="/images/hero-studio.jpg"
+      image="/images/purple-photo-studio.jpg"
       imageAlt="Studio with purple lighting and a filmmaker"
       imageClassName="object-left"
     >

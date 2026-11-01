@@ -5,7 +5,7 @@ const spaces = [
   {
     label: "Photography Studio",
     href: "#",
-    image: "/images/hero.jpg",
+    image: "/images/photo-shoot-session.jpg",
     alt: "Photography studio session",
     icon: (
       <svg
@@ -26,7 +26,7 @@ const spaces = [
   {
     label: "Film & Video Production",
     href: "#",
-    image: "/images/pexels-silverkblack-36697247.jpg",
+    image: "/images/photographer-directing.jpg",
     alt: "Videographer filming a production",
     icon: (
       <svg
@@ -49,7 +49,7 @@ const spaces = [
   {
     label: "Podcast Studio",
     href: "#",
-    image: "/images/pexels-dlxmedia-hu-215591835-11901222.jpg",
+    image: "/images/podcast-recording-room.jpg",
     alt: "Podcast studio with microphones",
     icon: (
       <svg
@@ -71,7 +71,7 @@ const spaces = [
   {
     label: "Music Recording",
     href: "#",
-    image: "/images/candidsoul-podcast-8281777.jpg",
+    image: "/images/podcast-microphones.jpg",
     alt: "Music recording studio equipment",
     icon: (
       <svg
@@ -93,7 +93,7 @@ const spaces = [
   {
     label: "Art Workshop Studio",
     href: "#",
-    image: "/images/pexels-luchik-14920148.jpg",
+    image: "/images/pink-content-studio.jpg",
     alt: "Creative art studio with colorful lighting",
     icon: (
       <svg
@@ -117,7 +117,7 @@ const spaces = [
   {
     label: "Cyclorama Studio",
     href: "#",
-    image: "/images/neon-wang-OWPB5I0xgFg-unsplash.jpg",
+    image: "/images/sound-stage-loft.jpg",
     alt: "Cyclorama studio with white cyc wall",
     icon: (
       <svg

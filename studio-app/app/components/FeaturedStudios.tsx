@@ -10,7 +10,7 @@ const studios = [
     reviews: 22,
     location: "Dhaka",
     price: "৳1,000",
-    image: "/images/hero.jpg",
+    image: "/images/photo-shoot-session.jpg",
     tags: ["Cyc Wall", "Professional Lights", "+2"],
   },
   {
@@ -19,7 +19,7 @@ const studios = [
     reviews: 89,
     location: "Dhaka",
     price: "৳1,500",
-    image: "/images/pexels-dlxmedia-hu-215591835-11901222.jpg",
+    image: "/images/podcast-recording-room.jpg",
     tags: ["3 Mics", "4K Camera", "+1"],
   },
   {
@@ -28,7 +28,7 @@ const studios = [
     reviews: 76,
     location: "Dhaka",
     price: "৳1,800",
-    image: "/images/luke-greenwood-uZW1GyRLm44-unsplash.jpg",
+    image: "/images/music-mixing-console.jpg",
     tags: ["Studio Monitors", "Voice Booth"],
   },
   {
@@ -37,7 +37,7 @@ const studios = [
     reviews: 64,
     location: "Dhaka",
     price: "৳1,200",
-    image: "/images/pexels-wutthichai-charoenburi-553075115-19554264.jpg",
+    image: "/images/red-home-studio.jpg",
     tags: ["Easels", "Creative Space"],
   },
 ];

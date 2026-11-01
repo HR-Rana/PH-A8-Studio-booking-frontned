@@ -15,6 +15,9 @@ const benefits = [
 ];
 
 export default function RegisterPage() {
+
+
+  
   return (
     <AuthShell
       title={
@@ -29,7 +32,7 @@ export default function RegisterPage() {
       topNote="Already have an account?"
       topLinkLabel="Login"
       topLinkHref="/login"
-      image="/images/register-studio.jpg"
+      image="/images/film-set-director.jpg"
       imageAlt="Film studio with a director chair under purple lighting"
       imageClassName="object-[center_60%]"
       overlay={<div className="absolute inset-0 bg-purple-600 mix-blend-hue" />}

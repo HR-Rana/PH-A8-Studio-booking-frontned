@@ -24,7 +24,7 @@ export default function HowItWorksHero({ children }: { children?: ReactNode }) {
     <div className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <Image
-          src="/images/register-studio.jpg"
+          src="/images/film-set-director.jpg"
           alt=""
           fill
           priority

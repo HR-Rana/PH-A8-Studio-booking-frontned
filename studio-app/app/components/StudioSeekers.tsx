@@ -31,7 +31,7 @@ const seekerSteps = [
     visual: (
       <div className="relative h-16 w-32 overflow-hidden rounded-lg ring-1 ring-white/10">
         <Image
-          src="/images/pexels-dlxmedia-hu-215591835-11901222.jpg"
+          src="/images/podcast-recording-room.jpg"
           alt=""
           fill
           sizes="128px"

@@ -33,6 +33,22 @@ const socialButtons = [
 export default function LoginForm() {
   const [remember, setRemember] = useState(true);
 
+  const hadleRegistrationForm =(e:React.SubmitEvent<HTMLElement>)=>{
+    e.preventDefault();
+
+
+    const formData = new FormData(e.target);
+    const userData = Object.fromEntries(formData.entries)
+
+
+    console.log(userData)
+
+  }
+
+
+
+
+
   return (
     <div className="w-full max-w-[420px] rounded-3xl border border-white/10 bg-[#191324]/80 p-6 shadow-[0_25px_70px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-8">
       <div className="flex items-center gap-3">
@@ -42,7 +58,7 @@ export default function LoginForm() {
 
       <form
         className="mt-6 space-y-4"
-        onSubmit={(event) => event.preventDefault()}
+        onSubmit={hadleRegistrationForm}
       >
         <Field
           type="email"
