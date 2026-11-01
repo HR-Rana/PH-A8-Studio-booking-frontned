@@ -2,118 +2,127 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
 import { authClient } from "../lib/auth-client";
-import { toast } from "@/components/ui/toast";
+import ProfileTabs, { type ProfileTab } from "../components/profile/ProfileTabs";
+import DashboardOverview from "../components/profile/DashboardOverview";
+import UploadStudioForm from "../components/profile/UploadStudioForm";
+import MyStudioListings from "../components/profile/MyStudioListings";
+import MyBookingsList from "../components/profile/MyBookingsList";
+import {
+  initialBookings,
+  initialListings,
+  type StudioListing,
+} from "../components/profile/ProfileData";
+
+const tabTitles: Record<ProfileTab, { title: string; subtitle: string }> = {
+  Dashboard: {
+    title: "Dashboard",
+    subtitle: "See your studios, bookings and account at a glance.",
+  },
+  "Add New Studio": {
+    title: "Add New Studio",
+    subtitle: "Upload a studio and start hosting creators.",
+  },
+  "My Studio Listings": {
+    title: "My Studio Listings",
+    subtitle: "Everything you have listed on StudioSpace.",
+  },
+  "My Bookings": {
+    title: "My Bookings",
+    subtitle: "Studios you have booked, past and upcoming.",
+  },
+};
+
+const LoggedOutNotice = () => (
+  <main className="grid min-h-screen place-items-center bg-[#0b0a10] px-6">
+    <div className="max-w-md rounded-2xl border border-white/5 bg-[#191324] p-10 text-center">
+      <h1 className="text-xl font-bold text-white">You are not logged in</h1>
+      <p className="mt-2 text-sm text-white/50">
+        Log in to manage your studios and bookings.
+      </p>
+      <Link
+        href="/login"
+        className="mt-6 inline-flex rounded-full bg-gradient-to-r from-purple-600 to-purple-500 px-8 py-3 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(147,51,234,0.45)]"
+      >
+        Go to Login
+      </Link>
+    </div>
+  </main>
+);
 
 export default function ProfilePage() {
+  const [activeTab, setActiveTab] = useState<ProfileTab>("Dashboard");
+  const [listings, setListings] = useState<StudioListing[]>(initialListings);
+
+  const { data: session, isPending, error } = authClient.useSession();
+
+  if (error) {
+    toast.error(error.message);
+  }
+
+  if (isPending) {
+    return (
+      <main className="grid min-h-screen place-items-center bg-[#0b0a10]">
+        <div className="h-10 w-10 animate-spin rounded-full border-2 border-white/10 border-t-purple-500" />
+      </main>
+    );
+  }
+
+  if (!session?.user) {
+    return <LoggedOutNotice />;
+  }
 
 
-  const {data:session, isPending, error} = authClient.useSession();
+    const user = session.user;
 
 
-   
-    if(error){
-        toast.error(error.message)
-        return <p>faild to load session</p>
-
-    }
-
-    const user = session?.user;
-
+  const handleUpload = (listing: StudioListing) => {
+    setListings((current) => [listing, ...current]);
+    setActiveTab("My Studio Listings");
+  };
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-10 sm:px-6">
-      <div className="mx-auto max-w-3xl">
-        {/* Header */}
+    <div className="min-h-screen bg-[#0b0a10] font-sans">
+      <ProfileTabs active={activeTab} onChange={setActiveTab} />
+
+      <main className="mx-auto max-w-7xl px-6 py-10 sm:px-10 lg:px-14 lg:py-12">
         <div className="mb-8">
-          <Link
-            href="/"
-            className="text-sm text-gray-500 transition hover:text-black"
-          >
-            ← Back to Home
-          </Link>
-
-          <h1 className="mt-5 text-3xl font-bold text-gray-900">
-            My Profile
+          <h1 className="text-2xl font-bold text-white sm:text-3xl">
+            {tabTitles[activeTab].title}
           </h1>
-
-          <p className="mt-2 text-sm text-gray-500">
-            Manage your personal information and account details.
+          <p className="mt-2 text-sm text-white/50">
+            {tabTitles[activeTab].subtitle}
           </p>
         </div>
 
-        {/* Profile Card */}
-        <section className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-          {/* Cover */}
-          <div className="h-32 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-500" />
+        {activeTab === "Dashboard" ? (
+          <DashboardOverview
+            user={user}
+            listings={listings}
+            bookings={initialBookings}
+            onNavigate={setActiveTab}
+          />
+        ) : null}
 
-          {/* User Info */}
-          <div className="px-6 pb-7 sm:px-8">
-            <div className="-mt-12 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-              <div className="flex items-end gap-4">
-                <div className="flex h-24 w-24 items-center justify-center rounded-full border-4 border-white bg-gray-100 text-3xl font-bold text-indigo-600 shadow-sm">
-                  {user?.name.charAt(0).toUpperCase()}
-                </div>
+        {activeTab === "Add New Studio" ? (
+          <UploadStudioForm onUpload={handleUpload} />
+        ) : null}
 
-                <div className="pb-1">
-                  <h2 className="text-xl font-bold text-gray-900">
-                    {user?.name}
-                  </h2>
-                  <p className="text-sm text-gray-500">{user?.role}</p>
-                </div>
-              </div>
+        {activeTab === "My Studio Listings" ? (
+          <MyStudioListings
+            listings={listings}
+            onDelete={(id) =>
+              setListings((current) => current.filter((item) => item.id !== id))
+            }
+            onNavigate={setActiveTab}
+          />
+        ) : null}
 
-              <button
-                type="button"
-                className="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-red-700 transition hover:bg-gray-50"
-              >
-               Logout
-              </button>
-            </div>
-
-            {/* Personal Information */}
-            <div className="mt-8">
-              <h3 className="text-lg font-semibold text-gray-900">
-                Personal Information
-              </h3>
-
-              <div className="mt-4 divide-y divide-gray-100 rounded-xl border border-gray-200">
-                <div className="flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-sm text-gray-500">Full Name</span>
-                  <span className="text-sm font-medium text-gray-900">
-                    {user?.name}
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-sm text-gray-500">Email Address</span>
-                  <span className="break-all text-sm font-medium text-gray-900">
-                    {user?.email}
-                  </span>
-                </div>
-
-                {/* <div className="flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-sm text-gray-500">Account Type</span>
-                  <span className="text-sm font-medium text-gray-900">
-                    {user.role}
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="text-sm text-gray-500">Member Since</span>
-                  <span className="text-sm font-medium text-gray-900">
-                    {user.joinedDate}
-                  </span>
-                </div> */}
-              </div>
-            </div>
-
-           
-          </div>
-        </section>
-
-    
-      </div>
-    </main>
+        {activeTab === "My Bookings" ? (
+          <MyBookingsList bookings={initialBookings} />
+        ) : null}
+      </main>
+    </div>
   );
 }

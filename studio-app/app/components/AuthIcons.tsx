@@ -366,6 +366,103 @@ export function IconHeadphones({ className = "h-6 w-6" }: IconProps) {
   );
 }
 
+export function IconDashboard({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <rect width="8" height="7" x="3" y="3" rx="1.5" />
+      <rect width="8" height="11" x="13" y="3" rx="1.5" />
+      <rect width="8" height="11" x="3" y="14" rx="1.5" />
+      <rect width="8" height="7" x="13" y="18" rx="1.5" />
+    </Svg>
+  );
+}
+
+export function IconUpload({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <path d="m17 8-5-5-5 5" />
+      <path d="M12 3v12" />
+    </Svg>
+  );
+}
+
+export function IconListings({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <rect width="8" height="8" x="3" y="3" rx="1.5" />
+      <path d="M15 4h6" />
+      <path d="M15 8h6" />
+      <path d="M15 16h6" />
+      <path d="M3 16h8" />
+      <path d="M3 20h8" />
+      <rect width="8" height="8" x="3" y="14" rx="1.5" />
+    </Svg>
+  );
+}
+
+export function IconCalendarCheck({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <rect width="18" height="18" x="3" y="4" rx="2" />
+      <path d="M16 2v4" />
+      <path d="M8 2v4" />
+      <path d="M3 10h18" />
+      <path d="m9 16 2 2 4-4" />
+    </Svg>
+  );
+}
+
+export function IconTrash({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <path d="M3 6h18" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      <path d="M10 11v6" />
+      <path d="M14 11v6" />
+    </Svg>
+  );
+}
+
+export function IconPlus({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <Svg className={className} strokeWidth={2.5}>
+      <path d="M12 5v14" />
+      <path d="M5 12h14" />
+    </Svg>
+  );
+}
+
+export function IconLogout({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <path d="m16 17 5-5-5-5" />
+      <path d="M21 12H9" />
+    </Svg>
+  );
+}
+
+export function IconDatabase({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5v14a9 3 0 0 0 18 0V5" />
+      <path d="M3 12a9 3 0 0 0 18 0" />
+    </Svg>
+  );
+}
+
+export function IconTrend({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <path d="M3 17 9 11l4 4 8-8" />
+      <path d="M15 7h6v6" />
+    </Svg>
+  );
+}
+
 export function IconRocket({ className = "h-5 w-5" }: IconProps) {
   return (
     <Svg className={className}>

@@ -9,17 +9,20 @@ import {
 } from "@/components/ui/popover"
 
 import { authClient } from '../lib/auth-client';
+import Image from 'next/image'
 
 const NavUserInfo = () => {
 
-      const { data: session, isPending } = authClient.useSession();
-    //   console.log(data)
+    //   const { data: session, isPending } = authClient.useSession();
+    
 
     return (
         <div>
             {
             <Popover>
-            <PopoverTrigger render={<Button variant="outline">Open popover</Button>} />
+            <PopoverTrigger render={<Button variant="outline">profile
+                {/* <Images src={user.image} width={30} height={20} alt={"image"} /> */}
+            </Button>} />
             <PopoverContent className="w-80">
                 <div className="grid gap-4">
                 <div className="space-y-2">
