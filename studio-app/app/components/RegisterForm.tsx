@@ -38,7 +38,7 @@ export default function RegisterForm() {
     e.preventDefault()
 
     const formData = new FormData(e.target)
-    const userData = Object.fromEntries(formData.entries()) as {fullName:string, email:string, password:string}
+    const userData = Object.fromEntries(formData.entries()) as {fullName:string, email:string, password:string, confirmPassword:string}
     let password = userData.password;
     let confirmPass = userData.confirmPassword;
 
@@ -57,14 +57,14 @@ export default function RegisterForm() {
 
 
     const {data, error } = await authClient.signUp.email({
-     name:userData.name,
+     name:userData.fullName,
     email:userData.email,
     password:userData.password,
       
     });
 
     if(data){
-      toast.success(`${data.name} Registrated Successfully..!`)
+      toast.success(`${data.user.name} Registrated Successfully..!`)
       redirect("/")
     }
     if(error){

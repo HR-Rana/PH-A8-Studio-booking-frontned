@@ -30,11 +30,13 @@ export default function DashboardOverview({
   listings,
   bookings,
   onNavigate,
+  signout,
 }: {
   user: DashboardUser;
   listings: StudioListing[];
   bookings: Booking[];
   onNavigate: (tab: "Add New Studio" | "My Studio Listings" | "My Bookings") => void;
+  signout: () => Promise<void>;
 }) {
   const totalBookings = bookings.length;
   const totalSpent = bookings
@@ -100,9 +102,15 @@ export default function DashboardOverview({
     .filter((booking) => booking.status === "Confirmed")
     .slice(0, 3);
 
+
+
+
+
+    
+
   return (
     <div className="space-y-10">
-      <ProfileCard user={user} />
+      <ProfileCard user={user} signout={signout} />
 
       <section>
         <h2 className="text-lg font-bold text-white">Overview</h2>

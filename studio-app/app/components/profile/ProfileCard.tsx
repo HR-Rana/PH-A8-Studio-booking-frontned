@@ -1,7 +1,13 @@
-import LogoutButton from "./LogoutButton";
+import { IconLogout } from "../AuthIcons";
 import type { DashboardUser } from "./DashboardOverview";
 
-export default function ProfileCard({ user }: { user: DashboardUser }) {
+export default function ProfileCard({
+  user,
+  signout,
+}: {
+  user: DashboardUser;
+  signout?: () => Promise<void>;
+}) {
   const displayName = user.name || "StudioSpace User";
 
   return (
@@ -21,7 +27,16 @@ export default function ProfileCard({ user }: { user: DashboardUser }) {
             </div>
           </div>
 
-          <LogoutButton />
+          {signout ? (
+            <button
+              type="button"
+              onClick={signout}
+              className="flex shrink-0 items-center gap-2 rounded-full border border-red-500/40 px-5 py-2 text-sm font-semibold text-red-400 transition-colors hover:bg-red-500/10"
+            >
+              <IconLogout className="h-4 w-4" />
+              Logout
+            </button>
+          ) : null}
         </div>
 
         <div className="mt-8">

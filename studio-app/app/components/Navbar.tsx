@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { authClient } from "../lib/auth-client";
 import NavUserInfo from "./NavUserInfo"
 type NavLink = {
   label: string;
@@ -76,6 +79,12 @@ function ChevronIcon() {
 }
 
 export default function Navbar({ active = "Home" }: { active?: string }) {
+
+  const {data:session, isPending, error} = authClient.useSession();
+
+  const userData = session?.user;
+
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#131217]/95 backdrop-blur-md">
       <nav className="mx-auto flex h-[72px]  items-center justify-between px-6 sm:px-10 lg:px-14">
@@ -112,7 +121,11 @@ export default function Navbar({ active = "Home" }: { active?: string }) {
             );
           })}
         </ul>
-          <NavUserInfo />
+
+        {
+              userData ? 
+          <NavUserInfo />:
+        
         <div className="flex items-center gap-4">
           {/* <button
             type="button"
@@ -156,6 +169,7 @@ export default function Navbar({ active = "Home" }: { active?: string }) {
             </svg>
           </button>
         </div>
+        }
       </nav>
     </header>
   );

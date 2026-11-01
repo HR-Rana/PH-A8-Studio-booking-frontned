@@ -41,7 +41,7 @@ export default function LoginForm() {
 
 
     const formData = new FormData(e.target);
-    const userData = Object.fromEntries(formData.entries())
+    const userData = Object.fromEntries(formData.entries()) as Record<string, string>
 
 
     const { data, error } = await authClient.signIn.email({
@@ -50,7 +50,7 @@ export default function LoginForm() {
     })
 
 
-    if (data.token) {
+    if (data?.token) {
       toast.success(`Welcome MR. ${data.user.name}`)
      redirect("/profile")
     }

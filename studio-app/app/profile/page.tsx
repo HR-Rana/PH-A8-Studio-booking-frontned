@@ -77,6 +77,23 @@ export default function ProfilePage() {
     const user = session.user;
 
 
+
+    const handleLogOut = async () => {
+      const { error: signOutError } = await authClient.signOut();
+
+      if (signOutError) {
+        toast.error(signOutError.message ?? "Failed to log out");
+        return;
+      }
+
+      toast.success("Logged out successfully");
+      window.location.href = "/";
+    };
+
+
+
+
+
   const handleUpload = (listing: StudioListing) => {
     setListings((current) => [listing, ...current]);
     setActiveTab("My Studio Listings");
@@ -99,6 +116,7 @@ export default function ProfilePage() {
         {activeTab === "Dashboard" ? (
           <DashboardOverview
             user={user}
+            signout={handleLogOut}
             listings={listings}
             bookings={initialBookings}
             onNavigate={setActiveTab}
