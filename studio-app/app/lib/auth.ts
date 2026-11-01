@@ -4,7 +4,7 @@ import { mongodbAdapter } from "@better-auth/mongo-adapter";
 
 
 const client = new MongoClient(`mongodb+srv://ariyanmahmud02019_db_user:${process.env.DB_PASSWORD}@cluster0.sizzebj.mongodb.net/`);
-const db = client.db();
+const db = client.db("users");
 
 console.log(process.env.DB_PASSWORD)
 
@@ -16,10 +16,5 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   }, 
-  socialProviders: { 
-    github: { 
-      clientId: process.env.GITHUB_CLIENT_ID as string, 
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string, 
-    }, 
-  }, 
+
 });

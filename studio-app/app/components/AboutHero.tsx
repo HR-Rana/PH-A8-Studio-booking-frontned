@@ -37,7 +37,7 @@ export default function AboutHero() {
         <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#131217] to-transparent" />
       </div>
 
-      <div className="relative mx-auto max-w-[1440px] px-6 pb-28 pt-10 sm:px-10 lg:px-14 lg:pb-40">
+      <div className="relative mx-auto  px-6 pb-28 pt-10 sm:px-10 lg:px-14 lg:pb-40">
         <div className="max-w-xl">
           <span className="flex items-center gap-3 text-sm font-semibold text-purple-400">
             About Us

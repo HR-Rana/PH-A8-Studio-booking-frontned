@@ -114,15 +114,15 @@ export default function Navbar({ active = "Home" }: { active?: string }) {
         </ul>
 
         <div className="flex items-center gap-4">
-          <button
+          {/* <button
             type="button"
             aria-label="Search"
             className="hidden text-white/80 transition-colors hover:text-white md:block"
           >
             <SearchIcon />
-          </button>
+          </button> */}
 
-          <span className="hidden h-7 w-px bg-white/15 md:block" aria-hidden="true" />
+          {/* <span className="hidden h-7 w-px bg-white/15 md:block" aria-hidden="true" /> */}
 
           <Link
             href="/login"

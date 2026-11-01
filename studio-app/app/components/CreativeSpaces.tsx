@@ -147,7 +147,7 @@ const spaces = [
 export default function CreativeSpaces() {
   return (
     <section className="w-full bg-white px-6 pb-16 sm:px-10 lg:px-14">
-      <div className="mx-auto max-w-[1440px]">
+      <div className="mx-auto ">
         <div className="text-center">
           <span className="inline-flex items-center gap-3 text-sm font-semibold text-purple-600">
             What We Offer

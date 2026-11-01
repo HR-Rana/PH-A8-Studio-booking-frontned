@@ -76,7 +76,7 @@ const socials: { label: string; icon: ReactNode }[] = [
 export default function Footer() {
   return (
     <footer className="bg-[#0d0b1c]">
-      <div className="mx-auto max-w-[1440px] px-6 py-12 sm:px-10 lg:px-14 lg:py-16">
+      <div className="mx-auto  px-6 py-12 sm:px-10 lg:px-14 lg:py-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.6fr] lg:gap-10">
           <div>
             <Link href="/" className="inline-flex items-center gap-2.5">

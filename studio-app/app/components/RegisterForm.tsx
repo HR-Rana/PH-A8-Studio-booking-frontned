@@ -1,5 +1,5 @@
-"use client";
 
+"use client"
 import { useState } from "react";
 import { Field, PasswordField } from "./AuthFields";
 import {
@@ -11,6 +11,10 @@ import {
   IconUserPlus,
   IconXLogo,
 } from "./AuthIcons";
+
+import { toast } from "react-toastify";
+import { authClient } from "../lib/auth-client";
+import { redirect } from "next/navigation";
 
 const socialButtons = [
   {
@@ -28,17 +32,22 @@ const socialButtons = [
 ];
 
 export default function RegisterForm() {
-  const [password, setMatchPass] = useState(false)
+  const [pass, setMatchPass] = useState(false)
   
-  const handleRegistrationForm = (e:React.SubmitEvent<HTMLFormElement>) =>{
+  const handleRegistrationForm =async (e:React.SubmitEvent<HTMLFormElement>) =>{
     e.preventDefault()
 
     const formData = new FormData(e.target)
-    const userData = Object.fromEntries(formData.entries())
+    const userData = Object.fromEntries(formData.entries()) as {fullName:string, email:string, password:string}
+    let password = userData.password;
+    let confirmPass = userData.confirmPassword;
 
-    const password = userData.password;
-    const confirmPass = userData.confirmPassword;
 
+    if (userData.password.length < 8) {
+      toast.error("Password must be at least 8 characters");
+      return;
+    }
+    
 
     if(password !== confirmPass){
       setMatchPass(true)
@@ -47,12 +56,23 @@ export default function RegisterForm() {
     }
 
 
-    // const { data, error } = await authClient.signUp.email({
-    // ...userData
-    // });
+    const {data, error } = await authClient.signUp.email({
+     name:userData.name,
+    email:userData.email,
+    password:userData.password,
+      
+    });
 
-
+    if(data){
+      toast.success(`${data.name} Registrated Successfully..!`)
+      redirect("/")
+    }
+    if(error){
+      toast.error(error.message)
+    }
+    
     console.log(userData)
+
 
   }
 
@@ -70,7 +90,7 @@ export default function RegisterForm() {
       >
         <Field
           type="text"
-          name="fullName"
+          name="name"
           placeholder="Full Name"
           icon={<IconUser className="h-5 w-5 text-gray-400" />}
         />
@@ -91,9 +111,9 @@ export default function RegisterForm() {
           Create Account
           <IconArrow className="h-4 w-4" />
         </button>
-        {
-          password ? <p>{"Please type same password "}</p>: " "
-        }
+        {/* {
+          pass ? <p className="text-red-600">{"Please type same password "}</p>: " "
+        } */}
       </form>
 
       <div className="mt-6 space-y-5">

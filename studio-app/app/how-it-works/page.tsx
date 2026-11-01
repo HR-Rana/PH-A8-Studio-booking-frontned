@@ -22,7 +22,7 @@ export default function HowItWorksPage() {
           <StudioSeekers />
         </HowItWorksHero>
 
-        <div className="mx-auto max-w-[1440px] space-y-14 px-6 py-14 sm:px-10 lg:space-y-20 lg:px-14 lg:py-16">
+        <div className="mx-auto  space-y-14 px-6 py-14 sm:px-10 lg:space-y-20 lg:px-14 lg:py-16">
           <StudioHosts />
           <WhyChooseStudioSpace />
           <FAQSection />

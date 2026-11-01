@@ -10,7 +10,7 @@ export default function Home() {
     <div className="min-h-screen bg-[#0b0a10] font-sans">
       <Navbar />
       <Hero />
-      <main className="mx-auto max-w-[1440px] space-y-14 px-6 py-12 sm:px-10 lg:space-y-20 lg:px-14 lg:py-16">
+      <main className="mx-auto  space-y-14 px-6 py-12 sm:px-10 lg:space-y-20 lg:px-14 lg:py-16">
         <TopRatedStudios />
         <BrowseCategories />
         <HowBookingWorks />

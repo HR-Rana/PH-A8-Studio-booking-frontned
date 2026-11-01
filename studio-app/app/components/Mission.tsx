@@ -73,7 +73,7 @@ const perks = [
 export default function Mission() {
   return (
     <section className="bg-white px-6 pb-16 pt-14 sm:px-10 lg:px-14 lg:pt-20">
-      <div className="mx-auto grid max-w-[1440px] items-center gap-10 lg:grid-cols-2 lg:gap-14">
+      <div className="mx-auto grid  items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <div className="relative h-72 overflow-hidden rounded-3xl shadow-sm sm:h-96 lg:h-[420px]">
           <Image
             src={musicMixingConsole}

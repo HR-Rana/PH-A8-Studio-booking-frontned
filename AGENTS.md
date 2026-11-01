@@ -21,5 +21,5 @@
 - No icon packages are installed — icons are hand-rolled SVGs; shared auth icons live in `app/components/AuthIcons.tsx`.
 - Path alias `@/*` exists, but the codebase consistently uses relative imports — follow the code.
 - Never add code comments. ESLint enforces `react/no-unescaped-entities`: escape `'` as `'` or put text inside `{...}` expressions.
-- StudioSpace dark/purple design system: backgrounds `#0b0a10` (home hero), `#131217` (navbar, sticky, `h-[72px]`), `#15111d` (about hero), `#0d0a14` (auth bg), card `#191324`, inputs `#241b33`; accent `text-purple-400`, buttons `bg-gradient-to-r from-purple-600 to-purple-500`. Page container: `mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-14`. Every section/page must be responsive at default Tailwind breakpoints.
+- StudioSpace dark/purple design system: backgrounds `#0b0a10` (home hero), `#131217` (navbar, sticky, `h-[72px]`), `#15111d` (about hero), `#0d0a14` (auth bg), card `#191324`, inputs `#241b33`; accent `text-purple-400`, buttons `bg-gradient-to-r from-purple-600 to-purple-500`. Page container: `mx-auto  px-6 sm:px-10 lg:px-14`. Every section/page must be responsive at default Tailwind breakpoints.
 - Images are local stock downloads in `public/images/`; render with `next/image` (`fill` + `object-*` + `sizes` inside an absolutely positioned wrapper).

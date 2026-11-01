@@ -38,7 +38,7 @@ export default function HowItWorksHero({ children }: { children?: ReactNode }) {
         <div className="absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-[#0b0a10] via-[#0b0a10]/60 to-transparent" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-[1440px] px-6 pb-16 pt-10 sm:px-10 lg:px-14 lg:pb-20 lg:pt-14">
+      <div className="relative z-10 mx-auto  px-6 pb-16 pt-10 sm:px-10 lg:px-14 lg:pb-20 lg:pt-14">
         <span className="inline-flex items-center rounded-full border border-purple-500/50 bg-purple-500/10 px-4 py-1.5 text-xs font-semibold text-purple-200">
           Easy Steps. Big Possibilities.
         </span>
