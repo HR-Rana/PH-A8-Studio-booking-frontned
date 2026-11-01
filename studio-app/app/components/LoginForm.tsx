@@ -12,6 +12,8 @@ import {
   IconXLogo,
 } from "./AuthIcons";
 import { authClient } from "../lib/auth-client";
+import { toast } from "react-toastify";
+import { redirect } from "next/navigation";
 
 const socialButtons = [
   {
@@ -48,13 +50,15 @@ export default function LoginForm() {
     })
 
 
-    if (data) {
-      console.log(data)
+    if (data.token) {
+      toast.success(`Welcome MR. ${data.user.name}`)
+     redirect("/profile")
     }
-    console.log(error)
+    
+    if(error){
+      toast.error(error.message)
+    }
 
-
-     console.log(userData)
 
   }
 
