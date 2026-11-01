@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
+import filmSetDirector from "../../public/images/film-set-director.jpg";
 
 function Squiggle() {
   return (
@@ -24,7 +25,7 @@ export default function HowItWorksHero({ children }: { children?: ReactNode }) {
     <div className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <Image
-          src="/images/film-set-director.jpg"
+          src={filmSetDirector}
           alt=""
           fill
           priority

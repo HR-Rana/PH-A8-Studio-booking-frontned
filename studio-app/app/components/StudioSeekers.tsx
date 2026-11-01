@@ -1,5 +1,6 @@
 import Image from "next/image";
 import StepsSection from "./StepsSection";
+import podcastRecordingRoom from "../../public/images/podcast-recording-room.jpg";
 import {
   IconCalendar,
   IconCheck,
@@ -31,7 +32,7 @@ const seekerSteps = [
     visual: (
       <div className="relative h-16 w-32 overflow-hidden rounded-lg ring-1 ring-white/10">
         <Image
-          src="/images/podcast-recording-room.jpg"
+          src={podcastRecordingRoom}
           alt=""
           fill
           sizes="128px"

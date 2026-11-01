@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { IconCheck, IconHeadphones, IconShield, IconZap } from "./AuthIcons";
+import filmSetDirector from "../../public/images/film-set-director.jpg";
 
 const guarantees: { label: string; sublabel: string; icon: ReactNode }[] = [
   {
@@ -30,7 +31,7 @@ export default function HostGuarantee() {
     <section className="grid items-center gap-8 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-14">
       <div className="relative h-64 overflow-hidden rounded-2xl border border-white/5 sm:h-80 lg:h-[300px]">
         <Image
-          src="/images/film-set-director.jpg"
+          src={filmSetDirector}
           alt="Creator working on a moody film set"
           fill
           sizes="(min-width: 1024px) 420px, 100vw"

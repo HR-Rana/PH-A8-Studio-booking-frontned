@@ -1,11 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import photoShootSession from "../../public/images/photo-shoot-session.jpg";
+import photographerDirecting from "../../public/images/photographer-directing.jpg";
+import podcastRecordingRoom from "../../public/images/podcast-recording-room.jpg";
+import podcastMicrophones from "../../public/images/podcast-microphones.jpg";
+import pinkContentStudio from "../../public/images/pink-content-studio.jpg";
+import soundStageLoft from "../../public/images/sound-stage-loft.jpg";
 
 const spaces = [
   {
     label: "Photography Studio",
     href: "#",
-    image: "/images/photo-shoot-session.jpg",
+    image: photoShootSession,
     alt: "Photography studio session",
     icon: (
       <svg
@@ -26,7 +32,7 @@ const spaces = [
   {
     label: "Film & Video Production",
     href: "#",
-    image: "/images/photographer-directing.jpg",
+    image: photographerDirecting,
     alt: "Videographer filming a production",
     icon: (
       <svg
@@ -49,7 +55,7 @@ const spaces = [
   {
     label: "Podcast Studio",
     href: "#",
-    image: "/images/podcast-recording-room.jpg",
+    image: podcastRecordingRoom,
     alt: "Podcast studio with microphones",
     icon: (
       <svg
@@ -71,7 +77,7 @@ const spaces = [
   {
     label: "Music Recording",
     href: "#",
-    image: "/images/podcast-microphones.jpg",
+    image: podcastMicrophones,
     alt: "Music recording studio equipment",
     icon: (
       <svg
@@ -93,7 +99,7 @@ const spaces = [
   {
     label: "Art Workshop Studio",
     href: "#",
-    image: "/images/pink-content-studio.jpg",
+    image: pinkContentStudio,
     alt: "Creative art studio with colorful lighting",
     icon: (
       <svg
@@ -117,7 +123,7 @@ const spaces = [
   {
     label: "Cyclorama Studio",
     href: "#",
-    image: "/images/sound-stage-loft.jpg",
+    image: soundStageLoft,
     alt: "Cyclorama studio with white cyc wall",
     icon: (
       <svg

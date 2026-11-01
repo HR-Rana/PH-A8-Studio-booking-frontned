@@ -1,7 +1,13 @@
 import Link from "next/link";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import type { ReactNode } from "react";
 import { IconArrow, IconCamera, IconClapper, IconMapPin, IconMic, IconMusic, IconPalette, IconSphere, IconStar } from "./AuthIcons";
+import photoStudioRedSet from "../../public/images/photo-studio-red-set.png";
+import cameraDollySoundstage from "../../public/images/camera-dolly-soundstage.png";
+import podcastMicrophones from "../../public/images/podcast-microphones.jpg";
+import musicStudioConsole from "../../public/images/music-studio-console.png";
+import pinkContentStudio from "../../public/images/pink-content-studio.jpg";
+import whiteCycStudio from "../../public/images/white-cyc-studio.jpg";
 
 type Studio = {
   name: string;
@@ -11,7 +17,7 @@ type Studio = {
   reviews: number;
   price: string;
   location: string;
-  image: string;
+  image: StaticImageData;
 };
 
 const studios: Studio[] = [
@@ -23,7 +29,7 @@ const studios: Studio[] = [
     reviews: 210,
     price: "$40",
     location: "Dhaka, Bangladesh",
-    image: "/images/photo-studio-red-set.png",
+    image: photoStudioRedSet,
   },
   {
     name: "CineCraft Studio",
@@ -33,7 +39,7 @@ const studios: Studio[] = [
     reviews: 85,
     price: "$60",
     location: "Dhaka, Bangladesh",
-    image: "/images/camera-dolly-soundstage.png",
+    image: cameraDollySoundstage,
   },
   {
     name: "The Podcast Hub",
@@ -43,7 +49,7 @@ const studios: Studio[] = [
     reviews: 72,
     price: "$35",
     location: "Dhaka, Bangladesh",
-    image: "/images/podcast-microphones.jpg",
+    image: podcastMicrophones,
   },
   {
     name: "Melody Studio",
@@ -53,7 +59,7 @@ const studios: Studio[] = [
     reviews: 88,
     price: "$50",
     location: "Dhaka, Bangladesh",
-    image: "/images/music-studio-console.png",
+    image: musicStudioConsole,
   },
   {
     name: "Artisan Space",
@@ -63,7 +69,7 @@ const studios: Studio[] = [
     reviews: 64,
     price: "$30",
     location: "Dhaka, Bangladesh",
-    image: "/images/pink-content-studio.jpg",
+    image: pinkContentStudio,
   },
   {
     name: "Cyc Studio Pro",
@@ -73,7 +79,7 @@ const studios: Studio[] = [
     reviews: 72,
     price: "$70",
     location: "Dhaka, Bangladesh",
-    image: "/images/white-cyc-studio.jpg",
+    image: whiteCycStudio,
   },
 ];
 

@@ -4,10 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { IconArrow } from "./AuthIcons";
+import purplePodcastStudio from "../../public/images/purple-podcast-studio.png";
+import filmStudioCrew from "../../public/images/film-studio-crew.png";
+import onairContentStudio from "../../public/images/onair-content-studio.png";
 
 const slides = [
   {
-    image: "/images/purple-podcast-studio.png",
+    image: purplePodcastStudio,
     alt: "Purple-lit studio with boom-arm microphones",
     lead: "Bring Your",
     accent: "Creative",
@@ -16,7 +19,7 @@ const slides = [
       "Rent premium studios for photography, filming, podcasting, music and more — all in one place.",
   },
   {
-    image: "/images/film-studio-crew.png",
+    image: filmStudioCrew,
     alt: "Film crew working on a lit soundstage",
     lead: "Where Great",
     accent: "Content",
@@ -25,7 +28,7 @@ const slides = [
       "Sound stages, cyc walls and film sets with professional gear — book by the hour and start shooting in minutes.",
   },
   {
-    image: "/images/onair-content-studio.png",
+    image: onairContentStudio,
     alt: "Content studio with ON AIR neon sign and camera gear",
     lead: "Make Your Next",
     accent: "Masterpiece",

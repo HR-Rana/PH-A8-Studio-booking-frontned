@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import purplePhotoStudio from "../../public/images/purple-photo-studio.jpg";
 
 const faqs = [
   {
@@ -29,7 +30,7 @@ export default function FAQSection() {
       <div className="grid items-stretch gap-8 lg:grid-cols-[1fr_1.4fr]">
         <div className="relative min-h-[260px] overflow-hidden rounded-2xl">
           <Image
-            src="/images/purple-photo-studio.jpg"
+            src={purplePhotoStudio}
             alt="Filmmaker working in a studio"
             fill
             sizes="(min-width: 1024px) 40vw, 100vw"

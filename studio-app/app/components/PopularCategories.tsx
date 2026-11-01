@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import type { ReactNode } from "react";
 import SectionHeading from "./SectionHeading";
 import {
@@ -9,36 +9,46 @@ import {
   IconPalette,
   IconSphere,
 } from "./AuthIcons";
+import whiteCycStudio from "../../public/images/white-cyc-studio.jpg";
+import filmSetDirector from "../../public/images/film-set-director.jpg";
+import podcastMicrophones from "../../public/images/podcast-microphones.jpg";
+import musicMixingConsole from "../../public/images/music-mixing-console.jpg";
+import pinkContentStudio from "../../public/images/pink-content-studio.jpg";
+import soundStageLoft from "../../public/images/sound-stage-loft.jpg";
 
-const categories: { name: string; image: string; icon: ReactNode }[] = [
+const categories: {
+  name: string;
+  image: StaticImageData;
+  icon: ReactNode;
+}[] = [
   {
     name: "Photography Studio",
-    image: "/images/white-cyc-studio.jpg",
+    image: whiteCycStudio,
     icon: <IconCamera className="h-5 w-5" />,
   },
   {
     name: "Film & Video Production",
-    image: "/images/film-set-director.jpg",
+    image: filmSetDirector,
     icon: <IconClapper className="h-5 w-5" />,
   },
   {
     name: "Podcast Studio",
-    image: "/images/podcast-microphones.jpg",
+    image: podcastMicrophones,
     icon: <IconMic className="h-5 w-5" />,
   },
   {
     name: "Music Recording",
-    image: "/images/music-mixing-console.jpg",
+    image: musicMixingConsole,
     icon: <IconMusic className="h-5 w-5" />,
   },
   {
     name: "Art Workshop",
-    image: "/images/pink-content-studio.jpg",
+    image: pinkContentStudio,
     icon: <IconPalette className="h-5 w-5" />,
   },
   {
     name: "Cyclorama Studio",
-    image: "/images/sound-stage-loft.jpg",
+    image: soundStageLoft,
     icon: <IconSphere className="h-5 w-5" />,
   },
 ];

@@ -2,6 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import SectionHeading from "./SectionHeading";
 import { IconArrow, IconHeart, IconMapPin, IconStar } from "./AuthIcons";
+import photoShootSession from "../../public/images/photo-shoot-session.jpg";
+import podcastRecordingRoom from "../../public/images/podcast-recording-room.jpg";
+import musicMixingConsole from "../../public/images/music-mixing-console.jpg";
+import redHomeStudio from "../../public/images/red-home-studio.jpg";
 
 const studios = [
   {
@@ -10,7 +14,7 @@ const studios = [
     reviews: 22,
     location: "Dhaka",
     price: "৳1,000",
-    image: "/images/photo-shoot-session.jpg",
+    image: photoShootSession,
     tags: ["Cyc Wall", "Professional Lights", "+2"],
   },
   {
@@ -19,7 +23,7 @@ const studios = [
     reviews: 89,
     location: "Dhaka",
     price: "৳1,500",
-    image: "/images/podcast-recording-room.jpg",
+    image: podcastRecordingRoom,
     tags: ["3 Mics", "4K Camera", "+1"],
   },
   {
@@ -28,7 +32,7 @@ const studios = [
     reviews: 76,
     location: "Dhaka",
     price: "৳1,800",
-    image: "/images/music-mixing-console.jpg",
+    image: musicMixingConsole,
     tags: ["Studio Monitors", "Voice Booth"],
   },
   {
@@ -37,7 +41,7 @@ const studios = [
     reviews: 64,
     location: "Dhaka",
     price: "৳1,200",
-    image: "/images/red-home-studio.jpg",
+    image: redHomeStudio,
     tags: ["Easels", "Creative Space"],
   },
 ];

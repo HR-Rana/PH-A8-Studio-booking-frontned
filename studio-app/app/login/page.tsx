@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AuthShell from "../components/AuthShell";
 import LoginForm from "../components/LoginForm";
+import purplePhotoStudio from "../../public/images/purple-photo-studio.jpg";
 
 export const metadata: Metadata = {
   title: "Login — StudioSpace",
@@ -40,7 +41,7 @@ export default function LoginPage() {
       topNote="Don't have an account?"
       topLinkLabel="Register"
       topLinkHref="/register"
-      image="/images/purple-photo-studio.jpg"
+      image={purplePhotoStudio}
       imageAlt="Studio with purple lighting and a filmmaker"
       imageClassName="object-left"
     >

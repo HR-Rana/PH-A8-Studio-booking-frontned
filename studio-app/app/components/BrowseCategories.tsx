@@ -1,27 +1,32 @@
 import Link from "next/link";
 import Image from "next/image";
 import { IconArrow } from "./AuthIcons";
+import photographerDirecting from "../../public/images/photographer-directing.jpg";
+import soundStageLoft from "../../public/images/sound-stage-loft.jpg";
+import podcastMicrophones from "../../public/images/podcast-microphones.jpg";
+import musicMixingConsole from "../../public/images/music-mixing-console.jpg";
+import pinkContentStudio from "../../public/images/pink-content-studio.jpg";
 
 const categories = [
   {
     name: "Photo Studios",
-    image: "/images/photographer-directing.jpg",
+    image: photographerDirecting,
   },
   {
     name: "Sound Stages",
-    image: "/images/sound-stage-loft.jpg",
+    image: soundStageLoft,
   },
   {
     name: "Podcast Rooms",
-    image: "/images/podcast-microphones.jpg",
+    image: podcastMicrophones,
   },
   {
     name: "Music Suites",
-    image: "/images/music-mixing-console.jpg",
+    image: musicMixingConsole,
   },
   {
     name: "Art Workshops",
-    image: "/images/pink-content-studio.jpg",
+    image: pinkContentStudio,
   },
 ];
 

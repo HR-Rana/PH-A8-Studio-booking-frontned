@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ApertureLogo } from "./Navbar";
@@ -11,7 +11,7 @@ type AuthShellProps = {
   topNote: string;
   topLinkLabel: string;
   topLinkHref: string;
-  image: string;
+  image: StaticImageData;
   imageAlt: string;
   imageClassName?: string;
   overlay?: ReactNode;
