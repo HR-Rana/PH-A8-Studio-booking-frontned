@@ -26,11 +26,11 @@ const socialButtons = [
     tile: "bg-[#251d33]",
     icon: <IconGitHub className="h-5 w-5 text-white" />,
   },
-  {
-    label: "Continue with X",
-    tile: "bg-[#251d33]",
-    icon: <IconXLogo className="h-4 w-4 text-white" />,
-  },
+  // {
+  //   label: "Continue with X",
+  //   tile: "bg-[#251d33]",
+  //   icon: <IconXLogo className="h-4 w-4 text-white" />,
+  // },
 ];
 
 export default function LoginForm() {
@@ -119,13 +119,13 @@ export default function LoginForm() {
           <span className="h-px flex-1 bg-white/10" />
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           {socialButtons.map((social) => (
             <button
               key={social.label}
               type="button"
               aria-label={social.label}
-              className={`grid h-12 place-items-center rounded-xl ring-1 ring-white/10 transition-all hover:ring-purple-500/50 ${social.tile}`}
+              className={`grid h-12 cursor-pointer place-items-center rounded-xl ring-1 ring-white/10 transition-all hover:ring-purple-500/50 ${social.tile}`}
             >
               {social.icon}
             </button>

@@ -15,6 +15,7 @@ import {
 import { toast } from "react-toastify";
 import { authClient } from "../lib/auth-client";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const socialButtons = [
   {
@@ -24,10 +25,6 @@ const socialButtons = [
   {
     label: "Continue with GitHub",
     icon: <IconGitHub className="h-5 w-5 text-white" />,
-  },
-  {
-    label: "Continue with X",
-    icon: <IconXLogo className="h-4 w-4 text-white" />,
   },
 ];
 
@@ -123,13 +120,13 @@ export default function RegisterForm() {
           <span className="h-px flex-1 bg-white/10" />
         </div>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           {socialButtons.map((social) => (
             <button
               key={social.label}
               type="button"
               aria-label={social.label}
-              className="grid h-12 place-items-center rounded-xl border border-white/10 bg-[#251d33] transition-colors hover:border-purple-500/50"
+              className="grid h-12 cursor-pointer place-items-center rounded-xl border border-white/10 bg-[#251d33] transition-colors hover:border-purple-500/50"
             >
               {social.icon}
             </button>
@@ -137,21 +134,9 @@ export default function RegisterForm() {
         </div>
 
         <p className="pt-1 text-center text-sm leading-relaxed text-white/60">
-          By creating an account, you agree to our{" "}
-          <a
-            href="#"
-            className="text-purple-300 transition-colors hover:text-purple-200"
-          >
-            Terms & Conditions
-          </a>{" "}
-          and{" "}
-          <a
-            href="#"
-            className="text-purple-300 transition-colors hover:text-purple-200"
-          >
-            Privacy Policy
-          </a>
-          .
+          have you any Account? 
+           <Link href="/login" className="font-semibold text-purple-400 transition-colors hover:text-purple-300">Login </Link>
+
         </p>
       </div>
     </div>

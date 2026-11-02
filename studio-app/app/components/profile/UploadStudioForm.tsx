@@ -17,6 +17,7 @@ import {
   type StudioImageKey,
   type StudioListing,
 } from "./ProfileData";
+import error from "next/dist/api/error";
 
 const imageOptions = Object.keys(studioImages) as StudioImageKey[];
 
@@ -54,6 +55,9 @@ export default function UploadStudioForm({
     setAmenities([]);
   };
 
+
+
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -82,8 +86,33 @@ export default function UploadStudioForm({
       rating: 0,
     };
 
+
+    
+    try{
+      const res = await fetch(`http://localhost:5000/api/createStudios`, {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify(listing)
+      })
+
+      const data = await res.json()
+      console.log(data)
+      toast.success(data.message);
+
+      if(!res.ok){
+        throw new error(data.error)
+      }
+    }catch(error){
+      console.log(error.message)
+    }
+
+
+
+
     onUpload(listing);
-    toast.success(`"${listing.name}" has been submitted for review`);
+    // toast.success(`"${listing.name}" has been submitted for review`);
     resetForm();
     setSubmitting(false);
   };
