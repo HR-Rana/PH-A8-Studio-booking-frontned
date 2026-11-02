@@ -13,7 +13,7 @@ export default function ExplorePage() {
   return (
     <div className="bg-[#0b0a10] font-sans">
       <Navbar active="Explore Studios" />
-      <main className="mx-auto  space-y-14 px-6 py-12 sm:px-10 lg:space-y-20 lg:px-14 lg:py-16">
+      <main className="mx-auto container space-y-14 px-6 py-12 sm:px-10 lg:space-y-20 lg:px-14 lg:py-16">
         <PopularCategories />
         <FeaturedStudios />
       </main>

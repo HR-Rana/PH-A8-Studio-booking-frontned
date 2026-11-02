@@ -34,8 +34,8 @@ export default function HostGuarantee() {
           src={filmSetDirector}
           alt="Creator working on a moody film set"
           fill
-          sizes="(min-width: 1024px) 420px, 100vw"
-          className="object-cover"
+          // sizes="100vw"
+          className="object-cover  w-full h-full"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#1b0938]/50 to-transparent" />
       </div>

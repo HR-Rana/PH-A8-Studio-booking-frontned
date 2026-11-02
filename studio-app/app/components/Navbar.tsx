@@ -11,7 +11,7 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "Explore Studios", href: "/explore", dropdown: true },
+  { label: "Explore Studios", href: "/explore", dropdown: false },
   { label: "How It Works", href: "/how-it-works" },
   { label: "About Us", href: "/about" },
 ];
@@ -29,7 +29,7 @@ export function ApertureLogo({
       strokeWidth={1.8}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={className}
+      className={`text-white ${className}`}
       aria-hidden="true"
     >
       <circle cx="12" cy="12" r="10" />
