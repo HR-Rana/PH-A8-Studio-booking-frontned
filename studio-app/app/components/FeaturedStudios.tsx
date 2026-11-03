@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import SectionHeading from "./SectionHeading";
@@ -6,47 +7,69 @@ import photoShootSession from "../../public/images/photo-shoot-session.jpg";
 import podcastRecordingRoom from "../../public/images/podcast-recording-room.jpg";
 import musicMixingConsole from "../../public/images/music-mixing-console.jpg";
 import redHomeStudio from "../../public/images/red-home-studio.jpg";
+import {useState, useEffect} from "react"
+import { toast } from "react-toastify";
 
-const studios = [
-  {
-    name: "Infinity White Cyc Studio",
-    rating: 4.9,
-    reviews: 22,
-    location: "Dhaka",
-    price: "৳1,000",
-    image: photoShootSession,
-    tags: ["Cyc Wall", "Professional Lights", "+2"],
-  },
-  {
-    name: "The Creator Hub",
-    rating: 4.8,
-    reviews: 89,
-    location: "Dhaka",
-    price: "৳1,500",
-    image: podcastRecordingRoom,
-    tags: ["3 Mics", "4K Camera", "+1"],
-  },
-  {
-    name: "Harmony Music Studio",
-    rating: 4.9,
-    reviews: 76,
-    location: "Dhaka",
-    price: "৳1,800",
-    image: musicMixingConsole,
-    tags: ["Studio Monitors", "Voice Booth"],
-  },
-  {
-    name: "Artistry Workshop",
-    rating: 4.7,
-    reviews: 64,
-    location: "Dhaka",
-    price: "৳1,200",
-    image: redHomeStudio,
-    tags: ["Easels", "Creative Space"],
-  },
-];
+type StudioData = {
+    _id: string;
+    name: string;
+    image: string;
+    price: number;
+    rating: number;
+    reviews: number;
+    location: string;
+    tags: string[];
+}
+
 
 export default function FeaturedStudios() {
+    const [studios, setStudios] = useState<StudioData[]>([]);
+    const [loading, setLoading] = useState(true);
+
+
+   useEffect(() => {
+       const fetchStudios = async () => {
+         try {
+           const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getStudios`);
+   
+           if (!res.ok) {
+             throw new Error("Failed to fetch studios");
+           }
+   
+           const result = await res.json();
+           console.log(result)
+   
+           setStudios(result);
+   
+         } catch (error) {
+           console.error("Error fetching studios:", error);
+           toast.error("Failed to load studios");
+         } finally {
+           setLoading(false);
+         }
+       };
+   
+        fetchStudios();
+      }, []);
+
+
+      if (loading) {
+        return (
+          <p className="py-10 text-center text-white/60">
+            Featured studios are loading...
+          </p>
+        );
+      }
+
+      if (studios.length === 0) {
+        return (
+          <p className="py-10 text-center text-white/60">
+            No studios available right now.
+          </p>
+        );
+      }
+
+
   return (
     <section>
       <div className="relative">
@@ -59,19 +82,20 @@ export default function FeaturedStudios() {
           }
           subtitle="Handpicked studios, loved by creators"
         />
-        <Link
+        {/* <Link
           href="/explore"
           className="mx-auto mt-4 flex w-fit items-center gap-2 rounded-full border border-purple-400/50 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-purple-500/15 lg:absolute lg:right-0 lg:top-1 lg:mx-0 lg:mt-0"
         >
           View All Studios
           <IconArrow className="h-3.5 w-3.5" />
-        </Link>
+        </Link> */}
       </div>
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
         {studios.map((studio) => (
-          <article
-            key={studio.name}
+         <Link href={`/studios/${studio._id}`}  key={studio.name}>
+           <article
+           
             className="overflow-hidden rounded-xl border border-white/5 bg-[#191324]"
           >
             <div className="relative h-40 sm:h-44">
@@ -126,6 +150,7 @@ export default function FeaturedStudios() {
               </div>
             </div>
           </article>
+         </Link>
         ))}
       </div>
     </section>

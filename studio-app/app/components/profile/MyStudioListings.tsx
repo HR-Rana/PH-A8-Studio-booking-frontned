@@ -20,8 +20,20 @@ import type {
 import { studioImages } from "./ProfileData";
 import { useEffect, useState } from "react";
 import EditStudioForm from "./EditStudioForm";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogMedia,
+  AlertDialogTitle,
+} from "../../../components/ui/alert-dialog";
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = `${process.env.NEXT_PUBLIC_BASE_URL}/api`;
+console.log()
 
 const statusStyles: Record<ListingStatus, string> = {
   Approved: "bg-emerald-500/10 text-emerald-400 ring-emerald-500/30",
@@ -42,11 +54,12 @@ export default function MyStudioListings({
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<StudioListing | null>(null);
 
   useEffect(() => {
     const fetchStudios = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/getStudios");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getStudios`);
 
         if (!res.ok) {
           throw new Error("Failed to fetch studios");
@@ -79,7 +92,7 @@ export default function MyStudioListings({
     setDeletingId(listing.id);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/deleteStudios/${listing._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/deleteStudios/${listing._id}`, {
         method: "DELETE",
       });
 
@@ -94,6 +107,7 @@ export default function MyStudioListings({
       );
 
       onDelete(listing.id);
+      setDeleteTarget(null);
       toast.success(`"${listing.name}" Deleted successfully`);
     } catch (err) {
       const errorMessage =
@@ -237,12 +251,11 @@ export default function MyStudioListings({
 
                 <button
                   type="button"
-                  disabled={deletingId === listing.id}
-                  onClick={() => handleDelete(listing)}
-                  className="flex items-center gap-1.5 rounded-lg border border-red-500/30 px-3 py-2 text-xs font-semibold text-red-400 transition-colors hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-60"
+                  onClick={() => setDeleteTarget(listing)}
+                  className="flex items-center gap-1.5 rounded-lg border border-red-500/30 px-3 py-2 text-xs font-semibold text-red-400 transition-colors hover:bg-red-500/10"
                 >
                   <IconTrash className="h-3.5 w-3.5" />
-                  {deletingId === listing.id ? "Removing..." : "Delete"}
+                  Delete
                 </button>
               </div>
             </div>
@@ -257,6 +270,50 @@ export default function MyStudioListings({
           onUpdate={handleUpdate}
         />
       ) : null}
+
+      <AlertDialog
+        open={deleteTarget !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setDeleteTarget(null);
+          }
+        }}
+      >
+        <AlertDialogContent className="border border-white/10 bg-[#191324] text-white">
+          <AlertDialogHeader>
+            <AlertDialogMedia className="bg-red-500/10 text-red-400">
+              <IconTrash />
+            </AlertDialogMedia>
+
+            <AlertDialogTitle>
+              Delete &quot;{deleteTarget?.name}&quot;?
+            </AlertDialogTitle>
+
+            <AlertDialogDescription className="text-white/60">
+              This will permanently remove your studio listing. This action
+              cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter className="border-white/10 bg-white/[0.02]">
+            <AlertDialogCancel className="border-white/10 bg-transparent text-white hover:bg-white/5 hover:text-white">
+              Cancel
+            </AlertDialogCancel>
+
+            <AlertDialogAction
+              disabled={deletingId !== null}
+              onClick={() => {
+                if (deleteTarget) {
+                  handleDelete(deleteTarget);
+                }
+              }}
+              className="bg-red-600 text-white hover:bg-red-500"
+            >
+              {deletingId ? "Removing..." : "Yes, Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

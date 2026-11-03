@@ -20,6 +20,7 @@ export type ListingStatus = "Approved" | "Pending" | "Draft";
 
 export type StudioListing = {
   id: string;
+  _id?: string;
   name: string;
   category: string;
   location: string;

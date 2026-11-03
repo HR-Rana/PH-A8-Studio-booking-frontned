@@ -6,6 +6,7 @@ import {
   IconCamera,
   IconCheck,
   IconPlus,
+  IconStar,
   IconStore,
   IconUpload,
 } from "../AuthIcons";
@@ -15,7 +16,7 @@ import {
   type StudioListing,
 } from "./ProfileData";
 
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = `${process.env.NEXT_PUBLIC_BASE_URL}/api`;
 
 export default function UploadStudioForm({
   onUpload,
@@ -28,6 +29,7 @@ export default function UploadStudioForm({
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [capacity, setCapacity] = useState("");
+  const [rating, setRating] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState("");
   const [amenities, setAmenities] = useState<string[]>([]);
@@ -76,6 +78,7 @@ export default function UploadStudioForm({
     setPrice("");
     setDescription("");
     setCapacity("");
+    setRating("");
     setImageFile(null);
     setImagePreview("");
     setAmenities([]);
@@ -97,6 +100,11 @@ export default function UploadStudioForm({
 
     if (Number(price) <= 0) {
       toast.error("Price must be greater than 0.");
+      return;
+    }
+
+    if (rating && (Number(rating) < 0 || Number(rating) > 5)) {
+      toast.error("Rating must be between 0 and 5.");
       return;
     }
 
@@ -133,7 +141,7 @@ export default function UploadStudioForm({
         tags: amenities.slice(0, 3),
         status: "Pending",
         bookings: 0,
-        rating: 0,
+        rating: rating === "" ? 0 : Number(rating),
       };
 
       const res = await fetch(`${API_BASE}/createStudios`, {
@@ -235,7 +243,7 @@ export default function UploadStudioForm({
           </div>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-3">
           <div className="grid gap-2">
             <label htmlFor="studio-price" className="text-sm font-medium text-white/80">
               Price per hour (৳)
@@ -265,6 +273,26 @@ export default function UploadStudioForm({
                 value={capacity}
                 onChange={(event) => setCapacity(event.target.value)}
                 placeholder="e.g. 8"
+                className="w-full min-w-0 bg-transparent text-sm text-white placeholder:text-gray-500 focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="grid gap-2">
+            <label htmlFor="studio-rating" className="text-sm font-medium text-white/80">
+              Rating (0 – 5)
+            </label>
+            <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-[#241b33] px-4 py-3.5 focus-within:border-purple-500/70">
+              <IconStar className="h-4 w-4 shrink-0 text-amber-400" />
+              <input
+                id="studio-rating"
+                type="number"
+                min="0"
+                max="5"
+                step="0.1"
+                value={rating}
+                onChange={(event) => setRating(event.target.value)}
+                placeholder="e.g. 4.5"
                 className="w-full min-w-0 bg-transparent text-sm text-white placeholder:text-gray-500 focus:outline-none"
               />
             </div>
