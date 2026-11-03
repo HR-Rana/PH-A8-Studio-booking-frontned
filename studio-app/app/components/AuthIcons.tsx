@@ -473,3 +473,21 @@ export function IconRocket({ className = "h-5 w-5" }: IconProps) {
     </Svg>
   );
 }
+
+export function IconEdit({ className = "h-4 w-4" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
+    </Svg>
+  );
+}
+
+export function IconClose({ className = "h-5 w-5" }: IconProps) {
+  return (
+    <Svg className={className}>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </Svg>
+  );
+}
