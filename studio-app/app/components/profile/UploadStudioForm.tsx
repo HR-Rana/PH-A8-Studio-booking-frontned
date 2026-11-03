@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import {
   IconCamera,
@@ -13,13 +12,10 @@ import {
 import {
   amenityOptions,
   studioCategories,
-  studioImages,
-  type StudioImageKey,
   type StudioListing,
 } from "./ProfileData";
-import error from "next/dist/api/error";
 
-const imageOptions = Object.keys(studioImages) as StudioImageKey[];
+const API_BASE = "http://localhost:5000/api";
 
 export default function UploadStudioForm({
   onUpload,
@@ -32,9 +28,11 @@ export default function UploadStudioForm({
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [capacity, setCapacity] = useState("");
-  const [image, setImage] = useState<StudioImageKey | "">("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState("");
   const [amenities, setAmenities] = useState<string[]>([]);
   const [submitting, setSubmitting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const toggleAmenity = (amenity: string) => {
     setAmenities((current) =>
@@ -44,6 +42,33 @@ export default function UploadStudioForm({
     );
   };
 
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error("Only jpeg, png, webp or gif images are allowed.");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image must be smaller than 5 MB.");
+      return;
+    }
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   const resetForm = () => {
     setName("");
     setCategory("");
@@ -51,8 +76,12 @@ export default function UploadStudioForm({
     setPrice("");
     setDescription("");
     setCapacity("");
-    setImage("");
+    setImageFile(null);
+    setImagePreview("");
     setAmenities([]);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
 
@@ -73,47 +102,64 @@ export default function UploadStudioForm({
 
     setSubmitting(true);
 
-    const listing: StudioListing = {
-      id: `st-${Date.now()}`,
-      name: name.trim(),
-      category,
-      location: location.trim(),
-      price: Number(price),
-      image: image || "White Cyc",
-      tags: amenities.slice(0, 3),
-      status: "Pending",
-      bookings: 0,
-      rating: 0,
-    };
+    try {
+      let imageUrl = "";
 
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("image", imageFile);
 
-    
-    try{
-      const res = await fetch(`http://localhost:5000/api/createStudios`, {
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json"
-        },
-        body:JSON.stringify(listing)
-      })
+        const uploadRes = await fetch(`${API_BASE}/uploadImage`, {
+          method: "POST",
+          body: formData,
+        });
 
-      const data = await res.json()
-      console.log(data)
-      toast.success(data.message);
+        const uploadData = await uploadRes.json();
 
-      if(!res.ok){
-        throw new error(data.error)
+        if (!uploadRes.ok) {
+          throw new Error(uploadData.message ?? "Image upload failed");
+        }
+
+        imageUrl = uploadData.data.imageUrl;
       }
-    }catch(error){
-      console.log(error.message)
+
+      const listing: StudioListing = {
+        id: `st-${Date.now()}`,
+        name: name.trim(),
+        category,
+        location: location.trim(),
+        price: Number(price),
+        image: imageUrl || "White Cyc",
+        tags: amenities.slice(0, 3),
+        status: "Pending",
+        bookings: 0,
+        rating: 0,
+      };
+
+      const res = await fetch(`${API_BASE}/createStudios`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(listing)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message ?? "Failed to create studio");
+      }
+
+      console.log(data);
+      toast.success(data.message ?? "Studio submitted for review");
+      onUpload(listing);
+      resetForm();
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Something went wrong";
+      console.error(errorMessage);
+      toast.error(errorMessage);
     }
 
-
-
-
-    onUpload(listing);
-    // toast.success(`"${listing.name}" has been submitted for review`);
-    resetForm();
     setSubmitting(false);
   };
 
@@ -240,38 +286,52 @@ export default function UploadStudioForm({
         </div>
 
         <div className="grid gap-2">
-          <span className="text-sm font-medium text-white/80">Cover Image</span>
-          <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
-            {imageOptions.map((option) => {
-              const isSelected = image === option;
-              return (
-                <button
-                  key={option}
-                  type="button"
-                  onClick={() => setImage(option)}
-                  aria-pressed={isSelected}
-                  className={
-                    isSelected
-                      ? "relative h-16 overflow-hidden rounded-lg ring-2 ring-purple-500 sm:h-20"
-                      : "relative h-16 overflow-hidden rounded-lg ring-1 ring-white/10 transition hover:ring-purple-500/60 sm:h-20"
-                  }
-                >
-                  <Image
-                    src={studioImages[option]}
-                    alt={option}
-                    fill
-                    sizes="120px"
-                    className="object-cover"
-                  />
-                  {isSelected ? (
-                    <span className="absolute inset-0 grid place-items-center bg-black/50 text-purple-400">
-                      <IconCheck className="h-4 w-4" />
-                    </span>
-                  ) : null}
-                </button>
-              );
-            })}
-          </div>
+          <label htmlFor="studio-image" className="text-sm font-medium text-white/80">
+            Cover Image
+          </label>
+          <input
+            id="studio-image"
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            onChange={handleImageChange}
+            className="block w-full cursor-pointer rounded-xl border border-white/10 bg-[#241b33] px-4 py-3.5 text-sm text-white/70 file:mr-4 file:cursor-pointer file:rounded-full file:border-0 file:bg-gradient-to-r file:from-purple-600 file:to-purple-500 file:px-6 file:py-2 file:text-sm file:font-semibold file:text-white focus-within:border-purple-500/70 focus:outline-none"
+          />
+          {imagePreview ? (
+            <div className="relative h-40 overflow-hidden rounded-xl border border-white/10 sm:h-48">
+              <img
+                src={imagePreview}
+                alt="Selected studio cover"
+                className="h-full w-full object-cover"
+              />
+              <button
+                type="button"
+                onClick={removeImage}
+                className="absolute right-3 top-3 flex items-center gap-1.5 rounded-lg bg-black/60 px-3 py-1.5 text-xs font-semibold text-white ring-1 ring-white/20 transition-colors hover:bg-red-500/70"
+              >
+                Remove
+              </button>
+              <span className="absolute bottom-3 left-3 rounded-md bg-black/60 px-2.5 py-1 text-[11px] font-medium text-purple-300">
+                {imageFile?.name}
+              </span>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="flex flex-col items-center gap-2 rounded-xl border border-dashed border-white/15 bg-white/[0.02] px-6 py-8 text-center transition-colors hover:border-purple-500/50 hover:bg-purple-500/5"
+            >
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-purple-500/10 text-purple-400">
+                <IconCamera className="h-5 w-5" />
+              </span>
+              <span className="text-sm font-medium text-white/80">
+                Click to upload a photo
+              </span>
+              <span className="text-xs text-white/40">
+                jpeg, png, webp or gif — max 5 MB
+              </span>
+            </button>
+          )}
         </div>
 
         <div className="grid gap-2">

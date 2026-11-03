@@ -7,6 +7,20 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   partialPrefetching: true,
+  images: {
+    dangerouslyAllowLocalIP: true,
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        pathname: "/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "*",
+      },
+    ],
+  },
   turbopack: {
     rules: {
       "*.css": {

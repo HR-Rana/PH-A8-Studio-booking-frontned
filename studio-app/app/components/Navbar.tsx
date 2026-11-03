@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { authClient } from "../lib/auth-client";
 import NavUserInfo from "./NavUserInfo"
 type NavLink = {
@@ -81,9 +83,23 @@ function ChevronIcon() {
 export default function Navbar({ active = "Home" }: { active?: string }) {
 
   const {data:session, isPending, error} = authClient.useSession();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   const userData = session?.user;
 
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#131217]/95 backdrop-blur-md">
@@ -121,22 +137,8 @@ export default function Navbar({ active = "Home" }: { active?: string }) {
             );
           })}
         </ul>
-
-        {
-              userData ? 
-          <NavUserInfo />:
-        
+ {!userData ?
         <div className="flex items-center gap-4">
-          {/* <button
-            type="button"
-            aria-label="Search"
-            className="hidden text-white/80 transition-colors hover:text-white md:block"
-          >
-            <SearchIcon />
-          </button> */}
-
-          {/* <span className="hidden h-7 w-px bg-white/15 md:block" aria-hidden="true" /> */}
-
           <Link
             href="/login"
             className="hidden rounded-full border border-purple-400/50 px-7 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-purple-500/15 md:block"
@@ -150,27 +152,95 @@ export default function Navbar({ active = "Home" }: { active?: string }) {
           >
             Register
           </Link>
-
-          <button
-            type="button"
-            aria-label="Open menu"
-            className="lg:hidden"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              className="h-7 w-7 text-white"
-              aria-hidden="true"
-            >
-              <path d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
         </div>
-        }
+        :
+        <NavUserInfo /> }
+
+        <button
+          type="button"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav-menu"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-lg text-white transition-colors hover:bg-white/5 hover:text-purple-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-400 lg:hidden"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            className="h-7 w-7"
+            aria-hidden="true"
+          >
+            {menuOpen ? (
+              <path d="M6 6l12 12M18 6 6 18" />
+            ) : (
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </nav>
+
+      <div
+        id="mobile-nav-menu"
+        className={`overflow-hidden border-white/5 bg-[#131217]/95 backdrop-blur-md transition-[max-height,opacity] duration-300 ease-in-out lg:hidden ${
+          menuOpen
+            ? "max-h-[420px] border-t opacity-100"
+            : "max-h-0 opacity-0"
+        }`}
+      >
+        <ul className="flex flex-col px-6 pb-6 pt-2 sm:px-10">
+          {navLinks.map((link) => {
+            const isActive = link.label === active;
+            return (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={
+                    isActive
+                      ? "flex items-center gap-1 rounded-lg px-3 py-3 text-[15px] font-semibold text-purple-400"
+                      : "flex items-center gap-1 rounded-lg px-3 py-3 text-[15px] font-medium text-white/90 transition-colors hover:bg-white/5 hover:text-purple-400"
+                  }
+                >
+                  {link.label}
+                  {link.dropdown ? <ChevronIcon /> : null}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        {userData ? (
+          <div className="border-t border-white/5 px-6 pb-6 pt-4 sm:px-10">
+            <Link
+              href="/profile"
+              onClick={() => setMenuOpen(false)}
+              className="flex rounded-full bg-gradient-to-r from-purple-600 to-purple-500 px-7 py-2.5 text-center text-sm font-semibold text-white shadow-[0_0_24px_rgba(147,51,234,0.45)] transition-colors hover:from-purple-500 hover:to-purple-400"
+            >
+              My Profile
+            </Link>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3 border-t border-white/5 px-6 pb-6 pt-4 sm:flex-row sm:px-10">
+            <Link
+              href="/login"
+              onClick={() => setMenuOpen(false)}
+              className="flex-1 rounded-full border border-purple-400/50 px-7 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-purple-500/15"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              onClick={() => setMenuOpen(false)}
+              className="flex-1 rounded-full bg-gradient-to-r from-purple-600 to-purple-500 px-7 py-2.5 text-center text-sm font-semibold text-white shadow-[0_0_24px_rgba(147,51,234,0.45)] transition-colors hover:from-purple-500 hover:to-purple-400"
+            >
+              Register
+            </Link>
+          </div>
+        )}
+      </div>
     </header>
   );
 }

@@ -9,7 +9,7 @@ import {
   IconStar,
   IconTrash,
 } from "../AuthIcons";
-import type { ListingStatus, StudioListing } from "./ProfileData";
+import type { ListingStatus, StudioImageKey, StudioListing } from "./ProfileData";
 import { studioImages } from "./ProfileData";
 
 const statusStyles: Record<ListingStatus, string> = {
@@ -52,14 +52,17 @@ export default function MyStudioListings({
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-      {listings.map((listing) => (
+      {listings.map((listing) => {
+        const coverImage =
+          studioImages[listing.image as StudioImageKey] ?? listing.image;
+        return (
         <article
           key={listing.id}
           className="overflow-hidden rounded-xl border border-white/5 bg-[#191324]"
         >
           <div className="relative h-40">
             <Image
-              src={studioImages[listing.image]}
+              src={coverImage}
               alt={listing.name}
               fill
               sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
@@ -136,7 +139,8 @@ export default function MyStudioListings({
             </div>
           </div>
         </article>
-      ))}
+        );
+      })}
     </div>
   );
 }

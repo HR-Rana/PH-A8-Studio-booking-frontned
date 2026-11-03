@@ -24,7 +24,7 @@ export type StudioListing = {
   category: string;
   location: string;
   price: number;
-  image: StudioImageKey;
+  image: string;
   tags: string[];
   status: ListingStatus;
   bookings: number;
