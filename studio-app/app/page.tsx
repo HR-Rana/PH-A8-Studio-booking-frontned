@@ -6,7 +6,7 @@ import HowBookingWorks from "./components/HowBookingWorks";
 import HostGuarantee from "./components/HostGuarantee";
 
 export default function Home() {
-  console.log("hello", process.env.NEXT_PUBLIC_BASE_URL)
+
 
   return (
     <div className="min-h-screen bg-[#0b0a10] font-sans">

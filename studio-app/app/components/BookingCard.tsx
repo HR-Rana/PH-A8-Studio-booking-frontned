@@ -48,7 +48,7 @@ export default function BookingCard({ studio }: { studio: BookingStudio }) {
     setBooking(true);
 
     try {
-      const res = await fetch(`${API_BASE}/createBooking`, {
+      const res = await fetch(`${API_BASE}/api/createBookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

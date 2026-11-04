@@ -29,7 +29,7 @@ async function ExploreStudios() {
 
   return (
     <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-      {result.map((studio: any, i) => (
+      {result.map((studio: any, i:Number) => (
         <article
           key={studio._id}
           className="overflow-hidden rounded-xl border border-white/5 bg-[#191324]"

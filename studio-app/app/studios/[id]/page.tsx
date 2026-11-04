@@ -30,7 +30,7 @@ type StudioDetails = {
 
 async function getStudio(id: string): Promise<StudioDetails | null> {
     try {
-        const res = await fetch(`${process.env.process.env.NEXT_PUBLIC_BASE_URL}/api/getStudios`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getStudios`, {
             cache: "no-store",
         });
 

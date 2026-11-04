@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image, { type StaticImageData } from "next/image";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { IconArrow, IconCamera, IconClapper, IconMapPin, IconMic, IconMusic, IconPalette, IconSphere, IconStar } from "./AuthIcons";
 import photoStudioRedSet from "../../public/images/photo-studio-red-set.png";
 import cameraDollySoundstage from "../../public/images/camera-dolly-soundstage.png";
@@ -8,6 +8,7 @@ import podcastMicrophones from "../../public/images/podcast-microphones.jpg";
 import musicStudioConsole from "../../public/images/music-studio-console.png";
 import pinkContentStudio from "../../public/images/pink-content-studio.jpg";
 import whiteCycStudio from "../../public/images/white-cyc-studio.jpg";
+import { toast } from "react-toastify";
 
 type Studio = {
   name: string;
@@ -83,7 +84,16 @@ const studios: Studio[] = [
   },
 ];
 
-export default function TopRatedStudios() {
+export default async function TopRatedStudios() {
+
+  const getTopRatedStudios = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getStudios`);
+  const  studios = await getTopRatedStudios.json();
+
+  if(!studios.ok){
+    console.log("Failed to load top rated studios");
+  }
+
+
   return (
     <section>
       <div className="relative">
@@ -106,7 +116,8 @@ export default function TopRatedStudios() {
       </div>
 
       <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 xl:gap-4">
-        {studios.map((studio) => (
+       <Suspense fallback={<p className="py-10 text-center text-white/60">Loading top rated studios...</p>}>
+           {studios.map((studio) => (
           <article
             key={studio.name}
             className="flex flex-col overflow-hidden rounded-xl border border-white/5 bg-[#191324]"
@@ -147,8 +158,7 @@ export default function TopRatedStudios() {
                 <IconMapPin className="h-3.5 w-3.5 text-purple-400" />
                 <span className="text-white/60">{studio.location}</span>
               </div>
-              <Link
-                href="/explore"
+              <Link href={`/studios/${studio._id}`}
                 className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-purple-400/40 py-2 text-xs font-semibold text-white transition-colors hover:bg-purple-500/15"
               >
                 View Details
@@ -157,6 +167,7 @@ export default function TopRatedStudios() {
             </div>
           </article>
         ))}
+       </Suspense>
       </div>
     </section>
   );

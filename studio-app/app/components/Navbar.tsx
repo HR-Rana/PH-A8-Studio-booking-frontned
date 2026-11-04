@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { authClient } from "../lib/auth-client";
 import NavUserInfo from "./NavUserInfo"
@@ -45,23 +44,7 @@ export function ApertureLogo({
   );
 }
 
-function SearchIcon({ className = "h-5 w-5" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <circle cx="11" cy="11" r="7" />
-      <path d="m21 21-4.3-4.3" />
-    </svg>
-  );
-}
+
 
 function ChevronIcon() {
   return (
@@ -84,13 +67,8 @@ export default function Navbar({ active = "Home" }: { active?: string }) {
 
   const {data:session, isPending, error} = authClient.useSession();
   const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname();
 
   const userData = session?.user;
-
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
