@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { IconHeart, IconStar, IconMapPin } from "../components/AuthIcons"
 import Navbar from "../components/Navbar";
-import PopularCategories from "../components/PopularCategories.tsx";
-import FeaturedStudios from "../components/FeaturedStudios.tsx";
+import PopularCategories from "../components/PopularCategories";
+import FeaturedStudios from "../components/FeaturedStudios";
 import Image from "next/image"
 import Link from "next/link"
 
@@ -23,13 +23,24 @@ async function ExploreStudios() {
     throw new Error("Failed to fetch studios");
   }
 
-  const result = await res.json();
+  type ExploreStudio = {
+    _id: string;
+    name: string;
+    price: string;
+    rating: string;
+    reviews: number;
+    image: string;
+    location: string;
+    tags: string[];
+  };
+
+  const result: ExploreStudio[] = await res.json();
 
 
 
   return (
     <div className="mt-10 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-      {result.map((studio: any, i:Number) => (
+      {result.map((studio) => (
         <article
           key={studio._id}
           className="overflow-hidden rounded-xl border border-white/5 bg-[#191324]"

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { IconCalendar, IconClock, IconMapPin, IconStar } from "./AuthIcons";
 
-const API_BASE = `${process.env.NEXT_PUBLIC_BASE_URL}/api"`;
+const API_BASE = `${process.env.NEXT_PUBLIC_BASE_URL}`;
 
 const hourOptions = [1, 2, 3, 4, 6, 8, 12];
 
@@ -48,7 +48,7 @@ export default function BookingCard({ studio }: { studio: BookingStudio }) {
     setBooking(true);
 
     try {
-      const res = await fetch(`${API_BASE}/api/createBookings`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/createBookings`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

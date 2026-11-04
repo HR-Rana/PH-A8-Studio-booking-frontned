@@ -10,6 +10,7 @@ import pinkContentStudio from "../../public/images/pink-content-studio.jpg";
 import whiteCycStudio from "../../public/images/white-cyc-studio.jpg";
 import { toast } from "react-toastify";
 
+
 type Studio = {
   name: string;
   category: string;
@@ -84,15 +85,7 @@ const studios: Studio[] = [
   },
 ];
 
-export default async function TopRatedStudios() {
-
-  const getTopRatedStudios = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getStudios`);
-  const  studios = await getTopRatedStudios.json();
-
-  if(!studios.ok){
-    console.log("Failed to load top rated studios");
-  }
-
+export default function TopRatedStudios() {
 
   return (
     <section>
@@ -115,9 +108,32 @@ export default async function TopRatedStudios() {
         </Link>
       </div>
 
+      <Suspense fallback={<p className="py-10 text-center text-white/60">Loading top rated studios...</p>}>
+        <TopStudiosGrid />
+      </Suspense>
+    </section>
+  );
+}
+
+type TopStudio = {
+  _id: string;
+  name: string;
+  category?: string;
+  categoryIcon?: ReactNode;
+  rating: string;
+  reviews: number;
+  price: string;
+  location: string;
+  image: string;
+};
+
+async function TopStudiosGrid() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/getStudios`);
+  const studios: TopStudio[] = await res.json();
+
+  return (
       <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 xl:gap-4">
-       <Suspense fallback={<p className="py-10 text-center text-white/60">Loading top rated studios...</p>}>
-           {studios.map((studio) => (
+       {studios.map((studio:TopStudio) => (
           <article
             key={studio.name}
             className="flex flex-col overflow-hidden rounded-xl border border-white/5 bg-[#191324]"
@@ -167,8 +183,6 @@ export default async function TopRatedStudios() {
             </div>
           </article>
         ))}
-       </Suspense>
       </div>
-    </section>
   );
 }
