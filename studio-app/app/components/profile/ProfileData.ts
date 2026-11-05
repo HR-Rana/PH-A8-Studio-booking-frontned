@@ -32,7 +32,7 @@ export type StudioListing = {
   rating: number;
 };
 
-export type BookingStatus = "Confirmed" | "Completed" | "Cancelled";
+export type BookingStatus = "Confirmed" | "Pending" | "Cancelled";
 
 export type Booking = {
   id: string;
@@ -85,52 +85,52 @@ export const initialListings: StudioListing[] = [
   },
 ];
 
-export const initialBookings: Booking[] = [
-  {
-    id: "bk-1",
-    studio: "Infinity White Cyc Studio",
-    image: "White Cyc",
-    location: "Banani, Dhaka",
-    date: "Nov 5, 2026",
-    time: "10:00 AM – 2:00 PM",
-    hours: 4,
-    total: 4000,
-    status: "Confirmed",
-  },
-  {
-    id: "bk-2",
-    studio: "The Creator Hub",
-    image: "Podcast Room",
-    location: "Dhanmondi, Dhaka",
-    date: "Nov 9, 2026",
-    time: "3:00 PM – 6:00 PM",
-    hours: 3,
-    total: 4500,
-    status: "Confirmed",
-  },
-  {
-    id: "bk-3",
-    studio: "Harmony Music Studio",
-    image: "Music Console",
-    location: "Gulshan, Dhaka",
-    date: "Oct 18, 2026",
-    time: "11:00 AM – 4:00 PM",
-    hours: 5,
-    total: 9000,
-    status: "Completed",
-  },
-  {
-    id: "bk-4",
-    studio: "Artistry Workshop",
-    image: "Home Studio",
-    location: "Mirpur, Dhaka",
-    date: "Oct 2, 2026",
-    time: "9:00 AM – 12:00 PM",
-    hours: 3,
-    total: 3600,
-    status: "Cancelled",
-  },
-];
+// export const initialBookings: Booking[] = [
+//   {
+//     id: "bk-1",
+//     studio: "Infinity White Cyc Studio",
+//     image: "White Cyc",
+//     location: "Banani, Dhaka",
+//     date: "Nov 5, 2026",
+//     time: "10:00 AM – 2:00 PM",
+//     hours: 4,
+//     total: 4000,
+//     status: "Confirmed",
+//   },
+//   {
+//     id: "bk-2",
+//     studio: "The Creator Hub",
+//     image: "Podcast Room",
+//     location: "Dhanmondi, Dhaka",
+//     date: "Nov 9, 2026",
+//     time: "3:00 PM – 6:00 PM",
+//     hours: 3,
+//     total: 4500,
+//     status: "Confirmed",
+//   },
+//   {
+//     id: "bk-3",
+//     studio: "Harmony Music Studio",
+//     image: "Music Console",
+//     location: "Gulshan, Dhaka",
+//     date: "Oct 18, 2026",
+//     time: "11:00 AM – 4:00 PM",
+//     hours: 5,
+//     total: 9000,
+//     status: "Pending",
+//   },
+//   {
+//     id: "bk-4",
+//     studio: "Artistry Workshop",
+//     image: "Home Studio",
+//     location: "Mirpur, Dhaka",
+//     date: "Oct 2, 2026",
+//     time: "9:00 AM – 12:00 PM",
+//     hours: 3,
+//     total: 3600,
+//     status: "Cancelled",
+//   },
+// ];
 
 export const studioCategories = [
   "Photography",

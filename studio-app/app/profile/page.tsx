@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { authClient } from "../lib/auth-client";
@@ -9,8 +9,9 @@ import DashboardOverview from "../components/profile/DashboardOverview";
 import UploadStudioForm from "../components/profile/UploadStudioForm";
 import MyStudioListings from "../components/profile/MyStudioListings";
 import MyBookingsList from "../components/profile/MyBookingsList";
+import type { MyBooking } from "../components/profile/BookingDetails";
 import {
-  initialBookings,
+
   initialListings,
   type StudioListing,
 } from "../components/profile/ProfileData";
@@ -54,9 +55,29 @@ const LoggedOutNotice = () => (
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState<ProfileTab>("Dashboard");
   const [listings, setListings] = useState<StudioListing[]>(initialListings);
+  const [data, setData] = useState<MyBooking[]>([]);
 
   const { data: session, isPending, error } = authClient.useSession();
 
+  useEffect(() => {
+    const getBookings = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/getBookings`,
+          { cache: "no-store" },
+        );
+        const bookings = await res.json();
+        setData(Array.isArray(bookings) ? bookings : []);
+      } catch (err) {
+        toast.error("Failed to load bookings");
+      }
+    };
+
+    getBookings();
+  }, [activeTab]);
+
+
+  
   if (error) {
     toast.error(error.message);
   }
@@ -94,6 +115,8 @@ export default function ProfilePage() {
 
 
 
+
+
   const handleUpload = (listing: StudioListing) => {
     setListings((current) => [listing, ...current]);
     setActiveTab("My Studio Listings");
@@ -118,7 +141,7 @@ export default function ProfilePage() {
             user={user}
             signout={handleLogOut}
             listings={listings}
-            bookings={initialBookings}
+            bookings={data}
             onNavigate={setActiveTab}
           />
         ) : null}
@@ -137,9 +160,7 @@ export default function ProfilePage() {
           />
         ) : null}
 
-        {activeTab === "My Bookings" ? (
-          <MyBookingsList bookings={initialBookings} />
-        ) : null}
+        {activeTab === "My Bookings" ? <MyBookingsList bookings={data} /> : null}
       </main>
     </div>
   );

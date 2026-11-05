@@ -10,8 +10,8 @@ import {
   IconUsers,
 } from "../AuthIcons";
 import ProfileCard from "./ProfileCard";
-import type { Booking, StudioListing } from "./ProfileData";
-import { studioImages } from "./ProfileData";
+import type { StudioListing } from "./ProfileData";
+import type { MyBooking, MyBookingStatus } from "./BookingDetails";
 
 export type DashboardUser = {
   name: string;
@@ -19,7 +19,8 @@ export type DashboardUser = {
   role?: string | null;
 };
 
-const statusStyles: Record<Booking["status"], string> = {
+const statusStyles: Record<MyBookingStatus, string> = {
+  Pending: "bg-yellow-500/10 text-yellow-400 ring-yellow-500/30",
   Confirmed: "bg-emerald-500/10 text-emerald-400 ring-emerald-500/30",
   Completed: "bg-purple-500/10 text-purple-400 ring-purple-500/30",
   Cancelled: "bg-red-500/10 text-red-400 ring-red-500/30",
@@ -34,14 +35,14 @@ export default function DashboardOverview({
 }: {
   user: DashboardUser;
   listings: StudioListing[];
-  bookings: Booking[];
+  bookings: MyBooking[];
   onNavigate: (tab: "Add New Studio" | "My Studio Listings" | "My Bookings") => void;
   signout: () => Promise<void>;
 }) {
   const totalBookings = bookings.length;
   const totalSpent = bookings
     .filter((booking) => booking.status !== "Cancelled")
-    .reduce((sum, booking) => sum + booking.total, 0);
+    .reduce((sum, booking) => sum + (booking.total ?? 0), 0);
   const avgRating =
     listings.length > 0
       ? (
@@ -99,7 +100,7 @@ export default function DashboardOverview({
   ];
 
   const recentBookings = [...bookings]
-    .filter((booking) => booking.status === "Confirmed")
+    .filter((booking) => booking.status !== "Cancelled")
     .slice(0, 3);
 
 
@@ -181,13 +182,13 @@ export default function DashboardOverview({
           <div className="mt-4 divide-y divide-white/5 rounded-xl border border-white/5 bg-[#191324]">
             {recentBookings.map((booking) => (
               <div
-                key={booking.id}
+                key={booking._id}
                 className="flex flex-wrap items-center gap-4 p-4"
               >
                 <div className="relative h-12 w-16 shrink-0 overflow-hidden rounded-lg">
                   <Image
-                    src={studioImages[booking.image]}
-                    alt={booking.studio}
+                    src={booking.studioImage || "/placeholder.png"}
+                    alt={booking.studioName || "Studio"}
                     fill
                     sizes="64px"
                     className="object-cover"
@@ -195,19 +196,19 @@ export default function DashboardOverview({
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold text-white">
-                    {booking.studio}
+                    {booking.studioName || "Studio booking"}
                   </p>
                   <p className="mt-0.5 text-xs text-white/50">
                     {booking.date} · {booking.time}
                   </p>
                 </div>
                 <p className="text-sm font-bold text-white">
-                  ৳{booking.total.toLocaleString("en-US")}
+                  ৳{Number(booking.total ?? 0).toLocaleString("en-US")}
                 </p>
                 <span
-                  className={`rounded-full px-3 py-1 text-[11px] font-semibold ring-1 ${statusStyles[booking.status]}`}
+                  className={`rounded-full px-3 py-1 text-[11px] font-semibold ring-1 ${statusStyles[booking.status ?? "Pending"]}`}
                 >
-                  {booking.status}
+                  {booking.status ?? "Pending"}
                 </span>
               </div>
             ))}

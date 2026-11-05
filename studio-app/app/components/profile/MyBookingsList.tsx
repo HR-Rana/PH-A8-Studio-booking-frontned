@@ -1,36 +1,38 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { IconCalendarCheck, IconMapPin } from "../AuthIcons";
-import type { Booking, BookingStatus } from "./ProfileData";
-import { studioImages } from "./ProfileData";
+import type { BookingStatus } from "./ProfileData";
+import type { MyBooking } from "./BookingDetails";
 
-const filters: (BookingStatus | "All")[] = [
+export type BookingFilterStatus = BookingStatus | "Pending";
+
+const filters: (BookingFilterStatus | "All")[] = [
   "All",
   "Confirmed",
-  "Completed",
   "Cancelled",
+  "Pending"
 ];
 
-const statusStyles: Record<BookingStatus, string> = {
+const statusStyles: Record<BookingFilterStatus, string> = {
   Confirmed: "bg-emerald-500/10 text-emerald-400 ring-emerald-500/30",
-  Completed: "bg-purple-500/10 text-purple-400 ring-purple-500/30",
+  Pending: "bg-yellow-500/10 text-yellow-400 ring-yellow-500/30",
   Cancelled: "bg-red-500/10 text-red-400 ring-red-500/30",
 };
 
 export default function MyBookingsList({
   bookings,
 }: {
-  bookings: Booking[];
+  bookings: MyBooking[];
 }) {
-  const [filter, setFilter] = useState<BookingStatus | "All">("All");
+  const [filter, setFilter] = useState<BookingFilterStatus | "All">("All");
 
   const visibleBookings =
     filter === "All"
       ? bookings
-      : bookings.filter((booking) => booking.status === filter);
+      : bookings.filter((booking) => (booking.status ?? "Pending") === filter);
 
   return (
     <div>
@@ -54,7 +56,7 @@ export default function MyBookingsList({
         })}
       </div>
 
-      {visibleBookings.length === 0 ? (
+      {bookings.length === 0 ? (
         <div className="mt-6 rounded-2xl border border-dashed border-white/10 bg-[#191324]/60 p-10 text-center">
           <span className="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-purple-500/10 text-purple-400">
             <IconCalendarCheck className="h-6 w-6" />
@@ -70,13 +72,13 @@ export default function MyBookingsList({
         <ul className="mt-6 space-y-4">
           {visibleBookings.map((booking) => (
             <li
-              key={booking.id}
+              key={booking._id}
               className="flex flex-col gap-4 rounded-xl border border-white/5 bg-[#191324] p-4 sm:flex-row sm:items-center"
             >
               <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-lg sm:h-20 sm:w-28">
                 <Image
-                  src={studioImages[booking.image]}
-                  alt={booking.studio}
+                  src={booking.studioImage || "/placeholder.png"}
+                  alt={booking.studioName ?? "Studio"}
                   fill
                   sizes="(min-width: 640px) 112px, 100vw"
                   className="object-cover"
@@ -86,12 +88,12 @@ export default function MyBookingsList({
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="text-sm font-semibold text-white">
-                    {booking.studio}
+                    {booking.studioName ?? "Studio booking"}
                   </h3>
                   <span
-                    className={`rounded-full px-3 py-1 text-[11px] font-semibold ring-1 ${statusStyles[booking.status]}`}
+                    className={`rounded-full px-3 py-1 text-[11px] font-semibold ring-1 ${statusStyles[(booking.status ?? "Pending") as BookingFilterStatus]}`}
                   >
-                    {booking.status}
+                    {booking.status ?? "Pending"}
                   </span>
                 </div>
                 <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-white/50">
@@ -102,25 +104,21 @@ export default function MyBookingsList({
                   <span className="text-white/70">{booking.date}</span>
                 </div>
                 <p className="mt-1.5 text-xs text-white/50">
-                  {booking.time} · {booking.hours} hour
-                  {booking.hours > 1 ? "s" : ""}
+                  {booking.time} · {booking.hours ?? 0} hour
+                  {(booking.hours ?? 0) > 1 ? "s" : ""}
                 </p>
               </div>
 
               <div className="flex items-center justify-between gap-3 sm:flex-col sm:items-end sm:justify-center">
                 <p className="text-base font-bold text-white">
-                  ৳{booking.total.toLocaleString("en-US")}
+                  ৳{Number(booking.total ?? 0).toLocaleString("en-US")}
                 </p>
-                <button
-                  type="button"
-                  disabled={booking.status !== "Confirmed"}
-                  onClick={() => {
-                    toast.info("Booking details coming soon");
-                  }}
-                  className="rounded-lg border border-white/10 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/5 disabled:cursor-not-allowed disabled:opacity-40"
+                <Link
+                  href={`/profile/booking-details?id=${booking._id}`}
+                  className="rounded-lg border border-white/10 px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/5"
                 >
                   View Details
-                </button>
+                </Link>
               </div>
             </li>
           ))}

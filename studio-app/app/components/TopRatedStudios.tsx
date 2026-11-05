@@ -132,11 +132,11 @@ async function TopStudiosGrid() {
   const studios: TopStudio[] = await res.json();
 
   return (
-    <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 xl:gap-4">
+    <div className="mt-10 ">
       {
         studios.length === 0 ? (
           <p className="col-span-full py-10 text-center text-white/60">No studios found.</p>
-        ) : <div>
+        ) : <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 xl:gap-4">
           {studios.map((studio: TopStudio) => (
             <article
               key={studio.name}
