@@ -33,7 +33,6 @@ import {
 } from "../../../components/ui/alert-dialog";
 
 const API_BASE = `${process.env.NEXT_PUBLIC_BASE_URL}/api`;
-console.log()
 
 const statusStyles: Record<ListingStatus, string> = {
   Approved: "bg-emerald-500/10 text-emerald-400 ring-emerald-500/30",
@@ -68,7 +67,22 @@ export default function MyStudioListings({
         const result = await res.json();
         console.log(result)
 
-        setStudios(result);
+        const normalized: StudioListing[] = (Array.isArray(result) ? result : []).map(
+          (studio: Record<string, unknown>) => ({
+            id: (studio._id ?? studio.id ?? "") as string,
+            name: (studio.name ?? "") as string,
+            category: (studio.category ?? "") as string,
+            location: (studio.location ?? "") as string,
+            price: Number(studio.price ?? 0),
+            image: (studio.image ?? "") as string,
+            tags: Array.isArray(studio.tags) ? (studio.tags as string[]) : [],
+            status: ((studio.status as ListingStatus) ?? "Pending"),
+            bookings: Number(studio.bookings ?? 0),
+            rating: Number(studio.rating ?? 0),
+          }),
+        );
+
+        setStudios(normalized);
 
       } catch (error) {
         console.error("Error fetching studios:", error);

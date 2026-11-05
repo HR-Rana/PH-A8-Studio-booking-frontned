@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   experimental: {
     agentFeedback: true,
   },
@@ -17,7 +16,8 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "*",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
       },
     ],
   },

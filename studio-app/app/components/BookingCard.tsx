@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { IconCalendar, IconClock, IconMapPin, IconStar } from "./AuthIcons";
 
-const API_BASE = `${process.env.NEXT_PUBLIC_BASE_URL}`;
+import { authClient } from "../lib/auth-client";
 
 const hourOptions = [1, 2, 3, 4, 6, 8, 12];
 
@@ -39,6 +39,11 @@ export default function BookingCard({ studio }: { studio: BookingStudio }) {
   const total = studio.price * selectedHours;
   const today = new Date().toISOString().split("T")[0];
 
+
+  const {data:session, error} = authClient.useSession();
+  const userData = session?.user;
+
+
   const handleBooking = async () => {
     if (!selectedDate) {
       toast.error("Please select a booking date.");
@@ -55,6 +60,8 @@ export default function BookingCard({ studio }: { studio: BookingStudio }) {
         },
         body: JSON.stringify({
           studioId: studio.id,
+          userId: userData?.id,
+          userEmail:userData?.email,
           studioName: studio.name,
           studioImage: studio.image,
           location: studio.location,

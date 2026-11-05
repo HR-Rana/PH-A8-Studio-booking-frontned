@@ -87,24 +87,25 @@ export default function EditStudioForm({
     setSubmitting(true);
 
     try {
-      let imageUrl = listing.image;
-
+      const formData = new FormData();
+      formData.append("name", name.trim());
+      formData.append("category", category);
+      formData.append("location", location.trim());
+      formData.append("price", String(price));
+      formData.append("tags", JSON.stringify(amenities.slice(0, 3)));
       if (imageFile) {
-        const formData = new FormData();
         formData.append("image", imageFile);
+      }
 
-        const uploadRes = await fetch(`${API_BASE}/uploadImage`, {
-          method: "POST",
-          body: formData,
-        });
+      const res = await fetch(`${API_BASE}/updateStudios/${listing.id}`, {
+        method: "PUT",
+        body: formData,
+      });
 
-        const uploadData = await uploadRes.json();
+      const data = await res.json();
 
-        if (!uploadRes.ok) {
-          throw new Error(uploadData.message ?? "Image upload failed");
-        }
-
-        imageUrl = uploadData.data.imageUrl;
+      if (!res.ok) {
+        throw new Error(data.message ?? "Failed to update studio");
       }
 
       const updated: StudioListing = {
@@ -113,23 +114,9 @@ export default function EditStudioForm({
         category,
         location: location.trim(),
         price: Number(price),
-        image: imageUrl,
+        image: data.data?.imageUrl ?? listing.image,
         tags: amenities.slice(0, 3),
       };
-
-      const res = await fetch(`${API_BASE}/updateStudio/${listing.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updated),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message ?? "Failed to update studio");
-      }
 
       toast.success(data.message ?? "Studio updated successfully");
       onUpdate(updated);

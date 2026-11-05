@@ -111,45 +111,28 @@ export default function UploadStudioForm({
     setSubmitting(true);
 
     try {
-      let imageUrl = "";
-
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append("image", imageFile);
-
-        const uploadRes = await fetch(`${API_BASE}/uploadImage`, {
-          method: "POST",
-          body: formData,
-        });
-
-        const uploadData = await uploadRes.json();
-
-        if (!uploadRes.ok) {
-          throw new Error(uploadData.message ?? "Image upload failed");
-        }
-
-        imageUrl = uploadData.data.imageUrl;
+      const formData = new FormData();
+      formData.append("name", name.trim());
+      formData.append("category", category);
+      formData.append("location", location.trim());
+      formData.append("price", String(price));
+      if (description.trim()) {
+        formData.append("description", description.trim());
       }
-
-      const listing: StudioListing = {
-        id: `st-${Date.now()}`,
-        name: name.trim(),
-        category,
-        location: location.trim(),
-        price: Number(price),
-        image: imageUrl || "White Cyc",
-        tags: amenities.slice(0, 3),
-        status: "Pending",
-        bookings: 0,
-        rating: rating === "" ? 0 : Number(rating),
-      };
+      if (capacity) {
+        formData.append("capacity", capacity);
+      }
+      if (rating) {
+        formData.append("rating", rating);
+      }
+      formData.append("tags", JSON.stringify(amenities.slice(0, 3)));
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
 
       const res = await fetch(`${API_BASE}/createStudios`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(listing)
+        body: formData,
       });
 
       const data = await res.json();
@@ -158,9 +141,24 @@ export default function UploadStudioForm({
         throw new Error(data.message ?? "Failed to create studio");
       }
 
-      console.log(data);
+      const created = data.data ?? data;
+      const imageUrl = created.imageUrl || created.image || "White Cyc";
+
+      const createdListing: StudioListing = {
+        id: created._id ?? created.id ?? `st-${Date.now()}`,
+        name: created.name ?? name.trim(),
+        category: created.category ?? category,
+        location: created.location ?? location.trim(),
+        price: Number(created.price ?? price),
+        image: imageUrl,
+        tags: created.tags ?? amenities.slice(0, 3),
+        status: "Pending",
+        bookings: 0,
+        rating: Number(created.rating ?? (rating === "" ? 0 : rating)),
+      };
+
       toast.success(data.message ?? "Studio submitted for review");
-      onUpload(listing);
+      onUpload(createdListing);
       resetForm();
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Something went wrong";
